@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra API
+  description: >-
+    The Amazon Kendra API enables programmatic management of intelligent
+    enterprise search indexes, data source connectors, query execution,
+    relevance tuning, and experience configuration for ML-powered search
+    across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+  - url: https://kendra.{region}.amazonaws.com
+    description: Amazon Kendra regional endpoint
+    variables:
+      region:
+        default: us-east-1
+        description: AWS region
+        enum:
+          - us-east-1
+          - us-east-2
+          - us-west-2
+          - eu-west-1
+          - ap-southeast-1
+          - ap-southeast-2
+security:
+  - sigv4: []
+tags:
+  - name: Indexes
+    description: Operations for creating and managing search indexes
+  - name: Data Sources
+    description: Operations for managing data source connectors
+  - name: Queries
+    description: Operations for querying the search index
+  - name: Documents
+    description: Operations for managing documents in the index
+  - name: Experiences
+    description: Operations for managing search experiences
+paths:
+  /:
+    post:
+      operationId: CreateIndex
+      summary: Create a search index
+      description: Creates a new Amazon Kendra index for enterprise search.
+      tags:
+        - Indexes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - Name
+                - RoleArn
+              properties:
+                Name:
+                  type: string
+                Description:
+                  type: string
+                Edition:
+                  type: string
+                  enum:
+                    - DEVELOPER_EDITION
+                    - ENTERPRISE_EDITION
+                RoleArn:
+                  type: string
+      responses:
+        '200':
+          description: Index created
+        '400':
+          description: Bad request
+  /query:
+    post:
+      operationId: Query
+      summary: Query the search index
+      description: Searches an active index with a query string and returns relevant documents.
+      tags:
+        - Queries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - IndexId
+                - QueryText
+              properties:
+                IndexId:
+                  type: string
+                QueryText:
+                  type: string
+                PageNumber:
+                  type: integer
+                PageSize:
+                  type: integer
+                AttributeFilter:
+                  type: object
+      responses:
+        '200':
+          description: Query results
+        '400':
+          description: Bad request
+  /documents:
+    post:
+      operationId: BatchPutDocument
+      summary: Add documents to an index
+      description: Adds one or more documents to an Amazon Kendra index.
+      tags:
+        - Documents
+      responses:
+        '200':
+          description: Documents added
+    delete:
+      operationId: BatchDeleteDocument
+      summary: Delete documents from an index
+      description: Removes one or more documents from an Amazon Kendra index.
+      tags:
+        - Documents
+      responses:
+        '200':
+          description: Documents deleted
+  /datasources:
+    post:
+      operationId: CreateDataSource
+      summary: Create a data source
+      description: Creates a data source connector for an Amazon Kendra index.
+      tags:
+        - Data Sources
+      responses:
+        '200':
+          description: Data source created
+  /datasources/list:
+    post:
+      operationId: ListDataSources
+      summary: List data sources
+      description: Lists the data source connectors for an index.
+      tags:
+        - Data Sources
+      responses:
+        '200':
+          description: List of data sources
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication
