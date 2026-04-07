@@ -46,7 +46,7 @@ paths:
   /:
     post:
       operationId: CreateIndex
-      summary: Create a search index
+      summary: Amazon Kendra Create a search index
       description: Creates a new Amazon Kendra index for enterprise search.
       tags:
         - Indexes
@@ -79,7 +79,7 @@ paths:
   /query:
     post:
       operationId: Query
-      summary: Query the search index
+      summary: Amazon Kendra Query the search index
       description: Searches an active index with a query string and returns relevant documents.
       tags:
         - Queries
@@ -111,7 +111,7 @@ paths:
   /documents:
     post:
       operationId: BatchPutDocument
-      summary: Add documents to an index
+      summary: Amazon Kendra Add documents to an index
       description: Adds one or more documents to an Amazon Kendra index.
       tags:
         - Documents
@@ -120,7 +120,7 @@ paths:
           description: Documents added
     delete:
       operationId: BatchDeleteDocument
-      summary: Delete documents from an index
+      summary: Amazon Kendra Delete documents from an index
       description: Removes one or more documents from an Amazon Kendra index.
       tags:
         - Documents
@@ -130,7 +130,7 @@ paths:
   /datasources:
     post:
       operationId: CreateDataSource
-      summary: Create a data source
+      summary: Amazon Kendra Create a data source
       description: Creates a data source connector for an Amazon Kendra index.
       tags:
         - Data Sources
@@ -140,7 +140,7 @@ paths:
   /datasources/list:
     post:
       operationId: ListDataSources
-      summary: List data sources
+      summary: Amazon Kendra List data sources
       description: Lists the data source connectors for an index.
       tags:
         - Data Sources
