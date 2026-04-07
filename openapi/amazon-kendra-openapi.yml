@@ -32,16 +32,14 @@ servers:
 security:
   - sigv4: []
 tags:
-  - name: Indexes
-    description: Operations for creating and managing search indexes
   - name: Data Sources
     description: Operations for managing data source connectors
-  - name: Queries
-    description: Operations for querying the search index
   - name: Documents
     description: Operations for managing documents in the index
-  - name: Experiences
-    description: Operations for managing search experiences
+  - name: Indexes
+    description: Operations for creating and managing search indexes
+  - name: Queries
+    description: Operations for querying the search index
 paths:
   /:
     post:
