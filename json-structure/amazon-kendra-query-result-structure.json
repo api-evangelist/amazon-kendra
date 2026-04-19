@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-kendra/refs/heads/main/json-structure/amazon-kendra-query-result-structure.json",
+  "name": "QueryResult",
+  "description": "Amazon Kendra query result containing ranked document passages and answers.",
+  "type": "object",
+  "properties": {
+    "QueryId": {
+      "type": "string",
+      "description": "The unique identifier for the query.",
+      "example": "q-abc12345"
+    },
+    "ResultItems": {
+      "type": "array",
+      "description": "The results of the search query.",
+      "items": {
+        "type": "object"
+      }
+    },
+    "TotalNumberOfResults": {
+      "type": "int32",
+      "description": "The total number of items found.",
+      "example": 42
+    },
+    "FacetResults": {
+      "type": "array",
+      "description": "Contains the facet results.",
+      "items": {
+        "type": "object"
+      }
+    }
+  }
+}

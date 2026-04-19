@@ -1,0 +1,151 @@
+vocabulary: "1.0.0"
+
+info:
+  provider: "Amazon Kendra"
+  description: "Unified vocabulary mapping operational and capability dimensions for Amazon Kendra intelligent enterprise search."
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+operational:
+  apis:
+    - namespace: kendra
+      version: "2019-02-03"
+      baseUrl: "https://kendra.{region}.amazonaws.com"
+      status: active
+
+  resources:
+    - name: indexes
+      api: kendra
+      actions: [create, list, describe, update, delete]
+    - name: data-sources
+      api: kendra
+      actions: [create, list, describe, update, delete, sync]
+    - name: documents
+      api: kendra
+      actions: [batch-put, batch-delete, get-status]
+    - name: queries
+      api: kendra
+      actions: [query, retrieve]
+    - name: experiences
+      api: kendra
+      actions: [create, list, describe, delete]
+    - name: faqs
+      api: kendra
+      actions: [create, list, describe, delete]
+    - name: thesaurus
+      api: kendra
+      actions: [create, list, describe, update, delete]
+    - name: query-suggestions
+      api: kendra
+      actions: [get]
+
+  actions:
+    - name: create
+      http_method: POST
+      pattern: write
+    - name: list
+      http_method: GET
+      pattern: read
+    - name: describe
+      http_method: GET
+      pattern: read
+    - name: update
+      http_method: PUT
+      pattern: write
+    - name: delete
+      http_method: DELETE
+      pattern: destructive
+    - name: query
+      http_method: POST
+      pattern: query
+    - name: retrieve
+      http_method: POST
+      pattern: query
+    - name: sync
+      http_method: POST
+      pattern: write
+
+  schemas:
+    core:
+      - name: Index
+        description: Amazon Kendra search index
+        key_properties: [Id, Name, Status, Edition, RoleArn]
+      - name: DataSource
+        description: Data source connector
+        key_properties: [Id, Name, Type, Status, Schedule]
+      - name: QueryResult
+        description: Search query result
+        key_properties: [QueryId, ResultItems, TotalNumberOfResults]
+      - name: Faq
+        description: FAQ list for an index
+        key_properties: [Id, Name, Status, FileFormat]
+
+  enums:
+    index_status:
+      - CREATING
+      - ACTIVE
+      - DELETING
+      - FAILED
+      - UPDATING
+    index_edition:
+      - DEVELOPER_EDITION
+      - ENTERPRISE_EDITION
+      - GEN_AI_ENTERPRISE_EDITION
+    data_source_type:
+      - S3
+      - SHAREPOINT
+      - SALESFORCE
+      - SERVICENOW
+      - CONFLUENCE
+      - GOOGLEDRIVE
+      - WEBCRAWLER
+      - CUSTOM
+
+  authentication:
+    schemes:
+      - type: apikey
+        header: Authorization
+        description: AWS Signature Version 4
+
+capability:
+  workflows:
+    - name: Enterprise Search
+      file: capabilities/amazon-kendra-enterprise-search.yaml
+      description: Unified workflow for search index management, data connectivity, and query operations
+      apis_combined: [kendra]
+      tool_count: 6
+      personas: [Knowledge Manager, Developer, IT Administrator]
+
+  personas:
+    - id: knowledge-manager
+      name: Knowledge Manager
+      description: Manages enterprise knowledge bases and search indexes
+      workflows: [Enterprise Search]
+    - id: developer
+      name: Developer
+      description: Integrates Kendra search into applications and RAG pipelines
+      workflows: [Enterprise Search]
+    - id: it-administrator
+      name: IT Administrator
+      description: Configures and maintains data source connectors and index settings
+      workflows: [Enterprise Search]
+
+  domains:
+    - name: Search
+      description: Intelligent search and information retrieval
+    - name: Knowledge Management
+      description: Enterprise knowledge organization and discovery
+
+crossReference:
+  - resource: indexes
+    operations: [CreateIndex, ListIndexes, DescribeIndex, UpdateIndex, DeleteIndex]
+    workflows: [Enterprise Search]
+    personas: [Knowledge Manager, IT Administrator]
+  - resource: queries
+    operations: [Query, Retrieve]
+    workflows: [Enterprise Search]
+    personas: [Developer, Knowledge Manager]
+  - resource: data-sources
+    operations: [CreateDataSource, ListDataSources, DescribeDataSource, UpdateDataSource, DeleteDataSource]
+    workflows: [Enterprise Search]
+    personas: [IT Administrator, Knowledge Manager]

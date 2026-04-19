@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-kendra/refs/heads/main/json-schema/amazon-kendra-faq-schema.json",
+  "title": "Faq",
+  "description": "An Amazon Kendra FAQ list associated with a search index.",
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": "string",
+      "description": "The identifier of the FAQ.",
+      "example": "faq-abc12345"
+    },
+    "Name": {
+      "type": "string",
+      "description": "The name of the FAQ.",
+      "example": "product-faqs"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "UPDATING",
+        "ACTIVE",
+        "DELETING",
+        "FAILED"
+      ],
+      "description": "The status of the FAQ.",
+      "example": "ACTIVE"
+    },
+    "FileFormat": {
+      "type": "string",
+      "enum": [
+        "CSV",
+        "CSV_WITH_HEADER",
+        "JSON"
+      ],
+      "description": "The format of the FAQ file.",
+      "example": "CSV"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the FAQ was created."
+    },
+    "UpdatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the FAQ was last updated."
+    }
+  }
+}

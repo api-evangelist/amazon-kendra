@@ -1,0 +1,8 @@
+{
+  "Id": "ds-abc12345",
+  "Name": "sharepoint-connector",
+  "Type": "S3",
+  "Status": "ACTIVE",
+  "Schedule": "cron(0 11 * * ? *)",
+  "IndexId": "abc12345-6789-def0-1234-abcdef012345"
+}

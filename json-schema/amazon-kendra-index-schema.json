@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-kendra/refs/heads/main/json-schema/amazon-kendra-index-schema.json",
+  "title": "Index",
+  "description": "An Amazon Kendra search index.",
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": "string",
+      "description": "The unique identifier of the index.",
+      "example": "abc12345-6789-def0-1234-abcdef012345"
+    },
+    "Name": {
+      "type": "string",
+      "description": "The name of the index.",
+      "example": "my-enterprise-index"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "ACTIVE",
+        "DELETING",
+        "FAILED",
+        "UPDATING",
+        "SYSTEM_UPDATING"
+      ],
+      "description": "The current status of the index.",
+      "example": "ACTIVE"
+    },
+    "Edition": {
+      "type": "string",
+      "enum": [
+        "DEVELOPER_EDITION",
+        "ENTERPRISE_EDITION",
+        "GEN_AI_ENTERPRISE_EDITION"
+      ],
+      "description": "The Amazon Kendra edition.",
+      "example": "ENTERPRISE_EDITION"
+    },
+    "RoleArn": {
+      "type": "string",
+      "description": "The IAM role ARN for the index.",
+      "example": "arn:aws:iam::123456789012:role/KendraRole"
+    },
+    "CreatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the index was created."
+    },
+    "UpdatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the index was last updated."
+    }
+  }
+}

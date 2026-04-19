@@ -1,0 +1,8 @@
+{
+  "Id": "faq-abc12345",
+  "Name": "product-faqs",
+  "Status": "ACTIVE",
+  "FileFormat": "CSV",
+  "CreatedAt": "2025-03-15T14:30:00Z",
+  "UpdatedAt": "2025-03-15T14:30:00Z"
+}

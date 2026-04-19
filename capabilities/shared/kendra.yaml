@@ -1,0 +1,256 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "Amazon Kendra"
+  description: "Amazon Kendra intelligent enterprise search API providing index management, data source connectors, document indexing, and query operations."
+  tags:
+    - Amazon Kendra
+    - Search
+    - Machine Learning
+    - AWS
+  created: "2026-04-19"
+  modified: "2026-04-19"
+
+binds:
+  - namespace: env
+    keys:
+      AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID
+      AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY
+
+capability:
+  consumes:
+    - type: http
+      namespace: kendra
+      baseUri: https://kendra.us-east-1.amazonaws.com
+      description: "Amazon Kendra intelligent enterprise search service."
+      authentication:
+        type: apikey
+        key: Authorization
+        value: "{{AWS_ACCESS_KEY_ID}}"
+        placement: header
+      resources:
+        - name: indexes
+          path: /indexes
+          description: "Amazon Kendra search indexes"
+          operations:
+            - name: create-index
+              method: POST
+              description: "Create a new Amazon Kendra search index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-indexes
+              method: GET
+              description: "List all Amazon Kendra indexes"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: index
+          path: /indexes/{IndexId}
+          description: "A specific Amazon Kendra search index"
+          operations:
+            - name: describe-index
+              method: GET
+              description: "Get information about an Amazon Kendra index"
+              inputParameters:
+                - name: IndexId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The identifier of the index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: delete-index
+              method: DELETE
+              description: "Delete an Amazon Kendra index"
+              inputParameters:
+                - name: IndexId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The identifier of the index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: data-sources
+          path: /indexes/{IndexId}/data-sources
+          description: "Data source connectors for an index"
+          operations:
+            - name: create-data-source
+              method: POST
+              description: "Create a data source connector"
+              inputParameters:
+                - name: IndexId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The identifier of the index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+            - name: list-data-sources
+              method: GET
+              description: "List data source connectors for an index"
+              inputParameters:
+                - name: IndexId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The identifier of the index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: query
+          path: /indexes/{IndexId}/query
+          description: "Query an Amazon Kendra index"
+          operations:
+            - name: query
+              method: POST
+              description: "Search an index and return relevant documents"
+              inputParameters:
+                - name: IndexId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The identifier of the index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+        - name: documents
+          path: /indexes/{IndexId}/documents
+          description: "Documents in an Amazon Kendra index"
+          operations:
+            - name: batch-put-document
+              method: POST
+              description: "Add documents to an index"
+              inputParameters:
+                - name: IndexId
+                  in: path
+                  type: string
+                  required: true
+                  description: "The identifier of the index"
+              outputRawFormat: json
+              outputParameters:
+                - name: result
+                  type: object
+                  value: "$."
+
+  exposes:
+    - type: rest
+      port: 8100
+      namespace: kendra-rest
+      resources:
+        - path: /v1/indexes
+          name: indexes
+          description: "Amazon Kendra index management"
+          operations:
+            - method: POST
+              name: create-index
+              description: "Create a search index"
+              call: "kendra.create-index"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: GET
+              name: list-indexes
+              description: "List all search indexes"
+              call: "kendra.list-indexes"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/indexes/{IndexId}/query
+          name: query
+          description: "Query a search index"
+          operations:
+            - method: POST
+              name: query
+              description: "Search an index"
+              call: "kendra.query"
+              with:
+                IndexId: "rest.IndexId"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9100
+      namespace: kendra-mcp
+      transport: http
+      tools:
+        - name: create-index
+          description: "Create a new Amazon Kendra search index"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "kendra.create-index"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-indexes
+          description: "List all Amazon Kendra indexes"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "kendra.list-indexes"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: describe-index
+          description: "Get information about a specific index"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "kendra.describe-index"
+          with:
+            IndexId: "tools.IndexId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: query-index
+          description: "Search an Amazon Kendra index with natural language"
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "kendra.query"
+          with:
+            IndexId: "tools.IndexId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-data-sources
+          description: "List data source connectors for an index"
+          hints:
+            readOnly: true
+            idempotent: true
+          call: "kendra.list-data-sources"
+          with:
+            IndexId: "tools.IndexId"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: batch-put-document
+          description: "Add documents to an Amazon Kendra index"
+          hints:
+            readOnly: false
+            idempotent: false
+          call: "kendra.batch-put-document"
+          with:
+            IndexId: "tools.IndexId"
+          outputParameters:
+            - type: object
+              mapping: "$."

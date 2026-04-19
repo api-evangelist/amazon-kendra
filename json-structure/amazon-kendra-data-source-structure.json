@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-structure.org/meta/core/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/amazon-kendra/refs/heads/main/json-structure/amazon-kendra-data-source-structure.json",
+  "name": "DataSource",
+  "description": "A data source connector for an Amazon Kendra index.",
+  "type": "object",
+  "properties": {
+    "Id": {
+      "type": "string",
+      "description": "The identifier of the data source.",
+      "example": "ds-abc12345"
+    },
+    "Name": {
+      "type": "string",
+      "description": "The name of the data source.",
+      "example": "sharepoint-connector"
+    },
+    "Type": {
+      "type": "string",
+      "enum": [
+        "S3",
+        "SHAREPOINT",
+        "DATABASE",
+        "SALESFORCE",
+        "ONEDRIVE",
+        "SERVICENOW",
+        "CUSTOM",
+        "CONFLUENCE",
+        "GOOGLEDRIVE",
+        "WEBCRAWLER",
+        "WORKDOCS"
+      ],
+      "description": "The type of the data source.",
+      "example": "S3"
+    },
+    "Status": {
+      "type": "string",
+      "enum": [
+        "CREATING",
+        "DELETING",
+        "FAILED",
+        "UPDATING",
+        "ACTIVE"
+      ],
+      "description": "The status of the data source.",
+      "example": "ACTIVE"
+    },
+    "Schedule": {
+      "type": "string",
+      "description": "The cron schedule for sync.",
+      "example": "cron(0 11 * * ? *)"
+    },
+    "IndexId": {
+      "type": "string",
+      "description": "The ID of the index this data source belongs to.",
+      "example": "abc12345-6789-def0-1234-abcdef012345"
+    }
+  }
+}

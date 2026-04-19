@@ -1,0 +1,9 @@
+{
+  "Id": "abc12345-6789-def0-1234-abcdef012345",
+  "Name": "my-enterprise-index",
+  "Status": "ACTIVE",
+  "Edition": "ENTERPRISE_EDITION",
+  "RoleArn": "arn:aws:iam::123456789012:role/KendraRole",
+  "CreatedAt": "2025-03-15T14:30:00Z",
+  "UpdatedAt": "2025-03-15T14:30:00Z"
+}
