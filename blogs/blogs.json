@@ -1,0 +1,13 @@
+{
+  "repo": "amazon-kendra",
+  "feeds": [
+    {
+      "source": "https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/amazon-kendra/",
+      "feed_url": "https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/amazon-kendra/feed/",
+      "saved": 10,
+      "title": "Amazon Kendra \u2013 Artificial Intelligence"
+    }
+  ],
+  "post_count": 10,
+  "fetched": "2026-05-03T23:21:29Z"
+}
