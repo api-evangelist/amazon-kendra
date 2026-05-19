@@ -1,0 +1,124 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Kendra API — Thesaurus
+  description: 'Amazon Kendra API — Thesaurus. 2 operations. Lead operation: Amazon Kendra Create Thesaurus. Self-contained
+    Naftiko capability covering one Amazon Kendra business surface.'
+  tags:
+  - Amazon Kendra
+  - Thesaurus
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_KENDRA_API_KEY: AMAZON_KENDRA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-kendra-thesaurus
+    baseUri: https://kendra.{region}.amazonaws.com
+    description: Amazon Kendra API — Thesaurus business capability. Self-contained, no shared references.
+    resources:
+    - name: indexes-IndexId-thesaurus
+      path: /indexes/{IndexId}/thesaurus
+      operations:
+      - name: createthesaurus
+        method: POST
+        description: Amazon Kendra Create Thesaurus
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listthesauri
+        method: GET
+        description: Amazon Kendra List Thesauri
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_KENDRA_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-kendra-thesaurus-rest
+    port: 8080
+    description: REST adapter for Amazon Kendra API — Thesaurus. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/indexes/{indexid}/thesaurus
+      name: indexes-indexid-thesaurus
+      description: REST surface for indexes-IndexId-thesaurus.
+      operations:
+      - method: POST
+        name: createthesaurus
+        description: Amazon Kendra Create Thesaurus
+        call: amazon-kendra-thesaurus.createthesaurus
+        with:
+          IndexId: rest.IndexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listthesauri
+        description: Amazon Kendra List Thesauri
+        call: amazon-kendra-thesaurus.listthesauri
+        with:
+          IndexId: rest.IndexId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-kendra-thesaurus-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Kendra API — Thesaurus. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: amazon-kendra-create-thesaurus
+      description: Amazon Kendra Create Thesaurus
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-thesaurus.createthesaurus
+      with:
+        IndexId: tools.IndexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-list-thesauri
+      description: Amazon Kendra List Thesauri
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-thesaurus.listthesauri
+      with:
+        IndexId: tools.IndexId
+      outputParameters:
+      - type: object
+        mapping: $.

@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Kendra API — Query Suggestions
+  description: 'Amazon Kendra API — Query Suggestions. 1 operations. Lead operation: Amazon Kendra Get Query Suggestions.
+    Self-contained Naftiko capability covering one Amazon Kendra business surface.'
+  tags:
+  - Amazon Kendra
+  - Query Suggestions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_KENDRA_API_KEY: AMAZON_KENDRA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-kendra-query-suggestions
+    baseUri: https://kendra.{region}.amazonaws.com
+    description: Amazon Kendra API — Query Suggestions business capability. Self-contained, no shared references.
+    resources:
+    - name: indexes-IndexId-query-suggestions
+      path: /indexes/{IndexId}/query-suggestions
+      operations:
+      - name: getquerysuggestions
+        method: POST
+        description: Amazon Kendra Get Query Suggestions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_KENDRA_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-kendra-query-suggestions-rest
+    port: 8080
+    description: REST adapter for Amazon Kendra API — Query Suggestions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/indexes/{indexid}/query-suggestions
+      name: indexes-indexid-query-suggestions
+      description: REST surface for indexes-IndexId-query-suggestions.
+      operations:
+      - method: POST
+        name: getquerysuggestions
+        description: Amazon Kendra Get Query Suggestions
+        call: amazon-kendra-query-suggestions.getquerysuggestions
+        with:
+          IndexId: rest.IndexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-kendra-query-suggestions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Kendra API — Query Suggestions. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: amazon-kendra-get-query-suggestions
+      description: Amazon Kendra Get Query Suggestions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-query-suggestions.getquerysuggestions
+      with:
+        IndexId: tools.IndexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

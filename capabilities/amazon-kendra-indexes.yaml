@@ -1,0 +1,219 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Kendra API — Indexes
+  description: 'Amazon Kendra API — Indexes. 5 operations. Lead operation: Amazon Kendra Create Index. Self-contained Naftiko
+    capability covering one Amazon Kendra business surface.'
+  tags:
+  - Amazon Kendra
+  - Indexes
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_KENDRA_API_KEY: AMAZON_KENDRA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-kendra-indexes
+    baseUri: https://kendra.{region}.amazonaws.com
+    description: Amazon Kendra API — Indexes business capability. Self-contained, no shared references.
+    resources:
+    - name: indexes
+      path: /indexes
+      operations:
+      - name: createindex
+        method: POST
+        description: Amazon Kendra Create Index
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listindexes
+        method: GET
+        description: Amazon Kendra List Indexes
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: indexes-IndexId
+      path: /indexes/{IndexId}
+      operations:
+      - name: describeindex
+        method: GET
+        description: Amazon Kendra Describe Index
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+      - name: updateindex
+        method: PUT
+        description: Amazon Kendra Update Index
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+      - name: deleteindex
+        method: DELETE
+        description: Amazon Kendra Delete Index
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_KENDRA_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-kendra-indexes-rest
+    port: 8080
+    description: REST adapter for Amazon Kendra API — Indexes. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/indexes
+      name: indexes
+      description: REST surface for indexes.
+      operations:
+      - method: POST
+        name: createindex
+        description: Amazon Kendra Create Index
+        call: amazon-kendra-indexes.createindex
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listindexes
+        description: Amazon Kendra List Indexes
+        call: amazon-kendra-indexes.listindexes
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/indexes/{indexid}
+      name: indexes-indexid
+      description: REST surface for indexes-IndexId.
+      operations:
+      - method: GET
+        name: describeindex
+        description: Amazon Kendra Describe Index
+        call: amazon-kendra-indexes.describeindex
+        with:
+          IndexId: rest.IndexId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateindex
+        description: Amazon Kendra Update Index
+        call: amazon-kendra-indexes.updateindex
+        with:
+          IndexId: rest.IndexId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteindex
+        description: Amazon Kendra Delete Index
+        call: amazon-kendra-indexes.deleteindex
+        with:
+          IndexId: rest.IndexId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-kendra-indexes-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Kendra API — Indexes. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: amazon-kendra-create-index
+      description: Amazon Kendra Create Index
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-indexes.createindex
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-list-indexes
+      description: Amazon Kendra List Indexes
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-indexes.listindexes
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-describe-index
+      description: Amazon Kendra Describe Index
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-indexes.describeindex
+      with:
+        IndexId: tools.IndexId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-update-index
+      description: Amazon Kendra Update Index
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-indexes.updateindex
+      with:
+        IndexId: tools.IndexId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-delete-index
+      description: Amazon Kendra Delete Index
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: amazon-kendra-indexes.deleteindex
+      with:
+        IndexId: tools.IndexId
+      outputParameters:
+      - type: object
+        mapping: $.

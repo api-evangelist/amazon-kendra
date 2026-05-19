@@ -1,0 +1,348 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Kendra API — Data Sources
+  description: 'Amazon Kendra API — Data Sources. 7 operations. Lead operation: Amazon Kendra Create Data Source. Self-contained
+    Naftiko capability covering one Amazon Kendra business surface.'
+  tags:
+  - Amazon Kendra
+  - Data Sources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_KENDRA_API_KEY: AMAZON_KENDRA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-kendra-data-sources
+    baseUri: https://kendra.{region}.amazonaws.com
+    description: Amazon Kendra API — Data Sources business capability. Self-contained, no shared references.
+    resources:
+    - name: indexes-IndexId-data-sources
+      path: /indexes/{IndexId}/data-sources
+      operations:
+      - name: createdatasource
+        method: POST
+        description: Amazon Kendra Create Data Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: listdatasources
+        method: GET
+        description: Amazon Kendra List Data Sources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+    - name: indexes-IndexId-data-sources-DataSourceId
+      path: /indexes/{IndexId}/data-sources/{DataSourceId}
+      operations:
+      - name: describedatasource
+        method: GET
+        description: Amazon Kendra Describe Data Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: DataSourceId
+          in: path
+          type: string
+          description: The identifier of the data source.
+          required: true
+      - name: updatedatasource
+        method: PUT
+        description: Amazon Kendra Update Data Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: DataSourceId
+          in: path
+          type: string
+          description: The identifier of the data source.
+          required: true
+      - name: deletedatasource
+        method: DELETE
+        description: Amazon Kendra Delete Data Source
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: DataSourceId
+          in: path
+          type: string
+          description: The identifier of the data source.
+          required: true
+    - name: indexes-IndexId-data-sources-DataSourceId-sync-jobs
+      path: /indexes/{IndexId}/data-sources/{DataSourceId}/sync-jobs
+      operations:
+      - name: startdatasourcesyncjob
+        method: POST
+        description: Amazon Kendra Start Data Source Sync Job
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: DataSourceId
+          in: path
+          type: string
+          description: The identifier of the data source.
+          required: true
+      - name: listdatasourcesyncjobs
+        method: GET
+        description: Amazon Kendra List Data Source Sync Jobs
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: DataSourceId
+          in: path
+          type: string
+          description: The identifier of the data source.
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_KENDRA_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-kendra-data-sources-rest
+    port: 8080
+    description: REST adapter for Amazon Kendra API — Data Sources. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/indexes/{indexid}/data-sources
+      name: indexes-indexid-data-sources
+      description: REST surface for indexes-IndexId-data-sources.
+      operations:
+      - method: POST
+        name: createdatasource
+        description: Amazon Kendra Create Data Source
+        call: amazon-kendra-data-sources.createdatasource
+        with:
+          IndexId: rest.IndexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listdatasources
+        description: Amazon Kendra List Data Sources
+        call: amazon-kendra-data-sources.listdatasources
+        with:
+          IndexId: rest.IndexId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/indexes/{indexid}/data-sources/{datasourceid}
+      name: indexes-indexid-data-sources-datasourceid
+      description: REST surface for indexes-IndexId-data-sources-DataSourceId.
+      operations:
+      - method: GET
+        name: describedatasource
+        description: Amazon Kendra Describe Data Source
+        call: amazon-kendra-data-sources.describedatasource
+        with:
+          IndexId: rest.IndexId
+          DataSourceId: rest.DataSourceId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatedatasource
+        description: Amazon Kendra Update Data Source
+        call: amazon-kendra-data-sources.updatedatasource
+        with:
+          IndexId: rest.IndexId
+          DataSourceId: rest.DataSourceId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedatasource
+        description: Amazon Kendra Delete Data Source
+        call: amazon-kendra-data-sources.deletedatasource
+        with:
+          IndexId: rest.IndexId
+          DataSourceId: rest.DataSourceId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/indexes/{indexid}/data-sources/{datasourceid}/sync-jobs
+      name: indexes-indexid-data-sources-datasourceid-sync-jobs
+      description: REST surface for indexes-IndexId-data-sources-DataSourceId-sync-jobs.
+      operations:
+      - method: POST
+        name: startdatasourcesyncjob
+        description: Amazon Kendra Start Data Source Sync Job
+        call: amazon-kendra-data-sources.startdatasourcesyncjob
+        with:
+          IndexId: rest.IndexId
+          DataSourceId: rest.DataSourceId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: GET
+        name: listdatasourcesyncjobs
+        description: Amazon Kendra List Data Source Sync Jobs
+        call: amazon-kendra-data-sources.listdatasourcesyncjobs
+        with:
+          IndexId: rest.IndexId
+          DataSourceId: rest.DataSourceId
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-kendra-data-sources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Kendra API — Data Sources. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: amazon-kendra-create-data-source
+      description: Amazon Kendra Create Data Source
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-data-sources.createdatasource
+      with:
+        IndexId: tools.IndexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-list-data-sources
+      description: Amazon Kendra List Data Sources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-data-sources.listdatasources
+      with:
+        IndexId: tools.IndexId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-describe-data-source
+      description: Amazon Kendra Describe Data Source
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-data-sources.describedatasource
+      with:
+        IndexId: tools.IndexId
+        DataSourceId: tools.DataSourceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-update-data-source
+      description: Amazon Kendra Update Data Source
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-data-sources.updatedatasource
+      with:
+        IndexId: tools.IndexId
+        DataSourceId: tools.DataSourceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-delete-data-source
+      description: Amazon Kendra Delete Data Source
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: amazon-kendra-data-sources.deletedatasource
+      with:
+        IndexId: tools.IndexId
+        DataSourceId: tools.DataSourceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-start-data-source
+      description: Amazon Kendra Start Data Source Sync Job
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-data-sources.startdatasourcesyncjob
+      with:
+        IndexId: tools.IndexId
+        DataSourceId: tools.DataSourceId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-list-data-source
+      description: Amazon Kendra List Data Source Sync Jobs
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: amazon-kendra-data-sources.listdatasourcesyncjobs
+      with:
+        IndexId: tools.IndexId
+        DataSourceId: tools.DataSourceId
+      outputParameters:
+      - type: object
+        mapping: $.

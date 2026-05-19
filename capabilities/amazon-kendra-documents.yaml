@@ -1,0 +1,180 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Amazon Kendra API — Documents
+  description: 'Amazon Kendra API — Documents. 3 operations. Lead operation: Amazon Kendra Batch Put Document. Self-contained
+    Naftiko capability covering one Amazon Kendra business surface.'
+  tags:
+  - Amazon Kendra
+  - Documents
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    AMAZON_KENDRA_API_KEY: AMAZON_KENDRA_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: amazon-kendra-documents
+    baseUri: https://kendra.{region}.amazonaws.com
+    description: Amazon Kendra API — Documents business capability. Self-contained, no shared references.
+    resources:
+    - name: indexes-IndexId-documents
+      path: /indexes/{IndexId}/documents
+      operations:
+      - name: batchputdocument
+        method: POST
+        description: Amazon Kendra Batch Put Document
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: batchdeletedocument
+        method: DELETE
+        description: Amazon Kendra Batch Delete Document
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: indexes-IndexId-documents-status
+      path: /indexes/{IndexId}/documents/status
+      operations:
+      - name: batchgetdocumentstatus
+        method: POST
+        description: Amazon Kendra Batch Get Document Status
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: IndexId
+          in: path
+          type: string
+          description: The identifier of the index.
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: apikey
+      key: Authorization
+      value: '{{env.AMAZON_KENDRA_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: amazon-kendra-documents-rest
+    port: 8080
+    description: REST adapter for Amazon Kendra API — Documents. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/indexes/{indexid}/documents
+      name: indexes-indexid-documents
+      description: REST surface for indexes-IndexId-documents.
+      operations:
+      - method: POST
+        name: batchputdocument
+        description: Amazon Kendra Batch Put Document
+        call: amazon-kendra-documents.batchputdocument
+        with:
+          IndexId: rest.IndexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: batchdeletedocument
+        description: Amazon Kendra Batch Delete Document
+        call: amazon-kendra-documents.batchdeletedocument
+        with:
+          IndexId: rest.IndexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/indexes/{indexid}/documents/status
+      name: indexes-indexid-documents-status
+      description: REST surface for indexes-IndexId-documents-status.
+      operations:
+      - method: POST
+        name: batchgetdocumentstatus
+        description: Amazon Kendra Batch Get Document Status
+        call: amazon-kendra-documents.batchgetdocumentstatus
+        with:
+          IndexId: rest.IndexId
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: amazon-kendra-documents-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Amazon Kendra API — Documents. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: amazon-kendra-batch-put-document
+      description: Amazon Kendra Batch Put Document
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-documents.batchputdocument
+      with:
+        IndexId: tools.IndexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-batch-delete-document
+      description: Amazon Kendra Batch Delete Document
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: amazon-kendra-documents.batchdeletedocument
+      with:
+        IndexId: tools.IndexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: amazon-kendra-batch-get-document
+      description: Amazon Kendra Batch Get Document Status
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: false
+      call: amazon-kendra-documents.batchgetdocumentstatus
+      with:
+        IndexId: tools.IndexId
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
