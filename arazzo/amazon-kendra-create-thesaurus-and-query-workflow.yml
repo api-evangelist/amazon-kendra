@@ -1,0 +1,118 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Create Thesaurus and Query
+  summary: Load a custom synonym thesaurus from S3 into an index, wait until it is active, then run a synonym-aware query.
+  description: >-
+    Loads a Solr-format synonym thesaurus from Amazon S3 into an Amazon Kendra
+    index so that user queries expand across custom synonyms, lists the index
+    thesauri to confirm registration, and then runs a Query that benefits from
+    the new synonym expansion. The spec does not expose a DescribeThesaurus
+    operation, so this flow adapts by confirming the thesaurus through
+    ListThesauri rather than polling a per-thesaurus status. Each step inlines
+    its request, including the AWS JSON protocol X-Amz-Target header, so the flow
+    can be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-thesaurus-and-query
+  summary: Create a thesaurus, confirm it via ListThesauri, then run a synonym-aware query.
+  description: >-
+    Creates a custom synonym thesaurus from an S3 file, lists the index thesauri
+    to confirm it was registered, and runs a search query that benefits from the
+    synonym expansion.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - thesaurusName
+    - roleArn
+    - sourceS3Path
+    - queryText
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index to add the thesaurus to.
+      thesaurusName:
+        type: string
+        description: The name for the thesaurus.
+      roleArn:
+        type: string
+        description: The IAM role ARN granting Kendra access to the thesaurus file.
+      sourceS3Path:
+        type: object
+        description: The S3 path where the Solr-format thesaurus file sits.
+      description:
+        type: string
+        description: An optional description for the thesaurus.
+      queryText:
+        type: string
+        description: The search query to run once the thesaurus is registered.
+  steps:
+  - stepId: createThesaurus
+    description: >-
+      Create the custom synonym thesaurus from the supplied Solr-format S3 file
+      so the index can expand queries across the defined synonyms.
+    operationId: CreateThesaurus
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.CreateThesaurus
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.thesaurusName
+        RoleArn: $inputs.roleArn
+        SourceS3Path: $inputs.sourceS3Path
+        Description: $inputs.description
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      thesaurusId: $response.body#/Id
+  - stepId: confirmThesaurus
+    description: >-
+      List the index thesauri to confirm the newly created thesaurus is
+      registered. The spec provides no DescribeThesaurus operation, so listing is
+      used in place of a per-thesaurus status poll.
+    operationId: ListThesauri
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.ListThesauri
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      thesaurusSummaryItems: $response.body#/ThesaurusSummaryItems
+  - stepId: query
+    description: >-
+      Run the search query against the index so synonym expansion from the new
+      thesaurus is applied to the results.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+  outputs:
+    thesaurusId: $steps.createThesaurus.outputs.thesaurusId
+    queryId: $steps.query.outputs.queryId
+    resultItems: $steps.query.outputs.resultItems

@@ -1,0 +1,128 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Ingest Documents and Query
+  summary: Directly upload documents into an index, wait until they finish indexing, then run a search query.
+  description: >-
+    Pushes a batch of documents straight into an Amazon Kendra index with
+    BatchPutDocument, polls BatchGetDocumentStatus until the submitted documents
+    leave the PROCESSING state and reach INDEXED, then runs a Query against the
+    index so the freshly ingested content is searchable. Each step inlines its
+    request, including the AWS JSON protocol X-Amz-Target header, so the flow can
+    be read and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: ingest-documents-and-query
+  summary: Batch put documents, wait for indexing, then query the index.
+  description: >-
+    Submits documents directly to an index, polls their indexing status until
+    they are INDEXED, and then executes a search query.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - documents
+    - documentInfoList
+    - queryText
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the target index.
+      documents:
+        type: array
+        description: One or more documents to add to the index.
+      documentInfoList:
+        type: array
+        description: A list of DocumentInfo objects identifying the documents to check status for.
+      queryText:
+        type: string
+        description: The search query to run once the documents are indexed.
+  steps:
+  - stepId: putDocuments
+    description: >-
+      Submit the batch of documents directly to the index. Documents are
+      accepted for asynchronous indexing and begin in the PROCESSING state.
+    operationId: BatchPutDocument
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.BatchPutDocument
+    requestBody:
+      contentType: application/json
+      payload:
+        Documents: $inputs.documents
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      failedDocuments: $response.body#/FailedDocuments
+  - stepId: waitForIndexed
+    description: >-
+      Poll the indexing status of the submitted documents until they leave the
+      PROCESSING state and report INDEXED so they are guaranteed to be
+      searchable.
+    operationId: BatchGetDocumentStatus
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.BatchGetDocumentStatus
+    requestBody:
+      contentType: application/json
+      payload:
+        DocumentInfoList: $inputs.documentInfoList
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      documentStatusList: $response.body#/DocumentStatusList
+    onSuccess:
+    - name: documentsIndexed
+      type: goto
+      stepId: query
+      criteria:
+      - context: $response.body
+        condition: $.DocumentStatusList[?(@.DocumentStatus=="PROCESSING")] empty
+        type: jsonpath
+    onFailure:
+    - name: retryStatus
+      type: retry
+      stepId: waitForIndexed
+      retryAfter: 15
+      retryLimit: 20
+      criteria:
+      - context: $response.body
+        condition: $.DocumentStatusList[?(@.DocumentStatus=="PROCESSING")] anyof
+        type: jsonpath
+  - stepId: query
+    description: >-
+      Run the search query against the index now that the submitted documents
+      are indexed and returnable in results.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+      totalResults: $response.body#/TotalNumberOfResults
+  outputs:
+    queryId: $steps.query.outputs.queryId
+    resultItems: $steps.query.outputs.resultItems
+    totalResults: $steps.query.outputs.totalResults

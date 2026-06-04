@@ -1,0 +1,154 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Provision Index and Start First Sync
+  summary: Create an index, wait until it is active, attach a data source, and kick off the first sync job.
+  description: >-
+    Stands up a brand new Amazon Kendra search index from scratch and gets it
+    ingesting content. The workflow creates the index, polls DescribeIndex until
+    the index leaves the CREATING state and reaches ACTIVE, then registers a data
+    source connector against the active index and immediately starts a
+    synchronization job so the connector begins crawling the repository. Each
+    step inlines its request, including the AWS JSON protocol X-Amz-Target
+    header, so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: provision-index-and-sync
+  summary: Create an index, wait for ACTIVE, add a data source, and start a sync job.
+  description: >-
+    Creates a new Kendra index, polls until it is ACTIVE, creates a data source
+    connector on the active index, and starts the first synchronization job.
+  inputs:
+    type: object
+    required:
+    - indexName
+    - indexRoleArn
+    - dataSourceName
+    - dataSourceType
+    properties:
+      indexName:
+        type: string
+        description: The name for the new search index.
+      indexRoleArn:
+        type: string
+        description: The IAM role ARN that gives Kendra permission to manage the index.
+      indexEdition:
+        type: string
+        description: The index edition, DEVELOPER_EDITION or ENTERPRISE_EDITION.
+      dataSourceName:
+        type: string
+        description: The name for the data source connector.
+      dataSourceType:
+        type: string
+        description: The data source connector type, such as S3 or SHAREPOINT.
+      dataSourceRoleArn:
+        type: string
+        description: The IAM role ARN for the data source connector.
+      dataSourceSchedule:
+        type: string
+        description: An optional cron schedule for recurring synchronization.
+  steps:
+  - stepId: createIndex
+    description: >-
+      Create the new Amazon Kendra index. The index begins life in the CREATING
+      state and is not queryable until it becomes ACTIVE.
+    operationId: CreateIndex
+    parameters:
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.CreateIndex
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.indexName
+        RoleArn: $inputs.indexRoleArn
+        Edition: $inputs.indexEdition
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      indexId: $response.body#/Id
+  - stepId: waitForIndexActive
+    description: >-
+      Poll the index until provisioning completes. The index reports a Status of
+      CREATING while it is being built and ACTIVE once it can serve queries and
+      accept documents.
+    operationId: DescribeIndex
+    parameters:
+    - name: IndexId
+      in: path
+      value: $steps.createIndex.outputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.DescribeIndex
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      indexStatus: $response.body#/Status
+    onSuccess:
+    - name: indexReady
+      type: goto
+      stepId: createDataSource
+      criteria:
+      - context: $response.body
+        condition: $.Status == "ACTIVE"
+        type: jsonpath
+    onFailure:
+    - name: retryDescribe
+      type: retry
+      stepId: waitForIndexActive
+      retryAfter: 30
+      retryLimit: 20
+      criteria:
+      - context: $response.body
+        condition: $.Status == "CREATING"
+        type: jsonpath
+  - stepId: createDataSource
+    description: >-
+      Register a data source connector against the now-active index so Kendra
+      knows where to crawl content from.
+    operationId: CreateDataSource
+    parameters:
+    - name: IndexId
+      in: path
+      value: $steps.createIndex.outputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.CreateDataSource
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.dataSourceName
+        Type: $inputs.dataSourceType
+        RoleArn: $inputs.dataSourceRoleArn
+        Schedule: $inputs.dataSourceSchedule
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      dataSourceId: $response.body#/Id
+  - stepId: startSyncJob
+    description: >-
+      Start the first synchronization job so the connector begins crawling and
+      indexing documents from the configured repository.
+    operationId: StartDataSourceSyncJob
+    parameters:
+    - name: IndexId
+      in: path
+      value: $steps.createIndex.outputs.indexId
+    - name: DataSourceId
+      in: path
+      value: $steps.createDataSource.outputs.dataSourceId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.StartDataSourceSyncJob
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionId: $response.body#/ExecutionId
+  outputs:
+    indexId: $steps.createIndex.outputs.indexId
+    dataSourceId: $steps.createDataSource.outputs.dataSourceId
+    executionId: $steps.startSyncJob.outputs.executionId

@@ -1,0 +1,122 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Refresh Documents
+  summary: Remove stale documents from an index, upload their refreshed versions, and wait until the new versions are indexed.
+  description: >-
+    Performs an in-place refresh of a set of documents in an Amazon Kendra index
+    by first removing the stale document ids with BatchDeleteDocument, then
+    uploading the refreshed documents with BatchPutDocument, and finally polling
+    BatchGetDocumentStatus until the new versions leave PROCESSING and reach
+    INDEXED. Each step inlines its request, including the AWS JSON protocol
+    X-Amz-Target header, so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: refresh-documents
+  summary: Delete stale documents, put refreshed versions, and wait for INDEXED.
+  description: >-
+    Removes stale document ids, uploads refreshed documents, and polls until the
+    new versions are INDEXED.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - documentIdList
+    - documents
+    - documentInfoList
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index to refresh documents in.
+      documentIdList:
+        type: array
+        description: The list of stale document ids to remove first.
+      documents:
+        type: array
+        description: The refreshed documents to add to the index.
+      documentInfoList:
+        type: array
+        description: DocumentInfo objects identifying the refreshed documents to poll status for.
+  steps:
+  - stepId: deleteStale
+    description: >-
+      Remove the stale document ids from the index so the refreshed versions
+      replace them cleanly rather than coexisting.
+    operationId: BatchDeleteDocument
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.BatchDeleteDocument
+    requestBody:
+      contentType: application/json
+      payload:
+        DocumentIdList: $inputs.documentIdList
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      failedDocuments: $response.body#/FailedDocuments
+  - stepId: putRefreshed
+    description: >-
+      Upload the refreshed documents to the index for asynchronous re-indexing.
+    operationId: BatchPutDocument
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.BatchPutDocument
+    requestBody:
+      contentType: application/json
+      payload:
+        Documents: $inputs.documents
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      failedDocuments: $response.body#/FailedDocuments
+  - stepId: waitForIndexed
+    description: >-
+      Poll the status of the refreshed documents until they leave PROCESSING and
+      report INDEXED, confirming the refresh is searchable.
+    operationId: BatchGetDocumentStatus
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.BatchGetDocumentStatus
+    requestBody:
+      contentType: application/json
+      payload:
+        DocumentInfoList: $inputs.documentInfoList
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      documentStatusList: $response.body#/DocumentStatusList
+    onSuccess:
+    - name: refreshIndexed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.DocumentStatusList[?(@.DocumentStatus=="PROCESSING")] empty
+        type: jsonpath
+    onFailure:
+    - name: retryStatus
+      type: retry
+      stepId: waitForIndexed
+      retryAfter: 15
+      retryLimit: 20
+      criteria:
+      - context: $response.body
+        condition: $.DocumentStatusList[?(@.DocumentStatus=="PROCESSING")] anyof
+        type: jsonpath
+  outputs:
+    documentStatusList: $steps.waitForIndexed.outputs.documentStatusList

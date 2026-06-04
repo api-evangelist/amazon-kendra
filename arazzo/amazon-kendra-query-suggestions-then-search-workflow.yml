@@ -1,0 +1,86 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Query Suggestions then Search
+  summary: Generate type-ahead query suggestions for a partial query, then run a full search using the top suggestion.
+  description: >-
+    Powers an autocomplete-then-search experience by calling GetQuerySuggestions
+    with a partial query to fetch the suggestions Kendra would offer a user, then
+    running a full Query using the top suggested phrase so the search reflects the
+    completed query the user most likely intended. Each step inlines its request,
+    including the AWS JSON protocol X-Amz-Target header, so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: query-suggestions-then-search
+  summary: Fetch query suggestions for a partial query, then search with the top suggestion.
+  description: >-
+    Calls GetQuerySuggestions for a partial query and runs a full Query using the
+    top suggested phrase.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - partialQueryText
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index to suggest and search against.
+      partialQueryText:
+        type: string
+        description: The partial query text typed so far to generate suggestions for.
+      maxSuggestionsCount:
+        type: integer
+        description: The maximum number of suggestions to return.
+  steps:
+  - stepId: getSuggestions
+    description: >-
+      Fetch the query suggestions Kendra would offer for the partial query text
+      based on prior query history.
+    operationId: GetQuerySuggestions
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.GetQuerySuggestions
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.partialQueryText
+        MaxSuggestionsCount: $inputs.maxSuggestionsCount
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      suggestions: $response.body#/Suggestions
+      topSuggestion: $response.body#/Suggestions/0/Value/Text/Text
+  - stepId: searchTopSuggestion
+    description: >-
+      Run a full search query using the top suggested phrase so the results
+      reflect the completed query the user most likely intended.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $steps.getSuggestions.outputs.topSuggestion
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+      totalResults: $response.body#/TotalNumberOfResults
+  outputs:
+    suggestions: $steps.getSuggestions.outputs.suggestions
+    queryId: $steps.searchTopSuggestion.outputs.queryId
+    resultItems: $steps.searchTopSuggestion.outputs.resultItems

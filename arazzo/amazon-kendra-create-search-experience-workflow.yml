@@ -1,0 +1,106 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Create Search Experience
+  summary: Wait for an index to be active, create a hosted search experience on it, and confirm it via the experiences list.
+  description: >-
+    Stands up a hosted Amazon Kendra search experience on top of an existing
+    index. The workflow first confirms with DescribeIndex that the target index
+    is ACTIVE, then creates the experience application, and finally lists the
+    index experiences to confirm the new experience is registered. Each step
+    inlines its request, including the AWS JSON protocol X-Amz-Target header, so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-search-experience
+  summary: Confirm the index is ACTIVE, create a search experience, and confirm via ListExperiences.
+  description: >-
+    Confirms the index is ACTIVE, creates a hosted search experience, and lists
+    the index experiences to confirm registration.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - experienceName
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index to attach the experience to.
+      experienceName:
+        type: string
+        description: A name for the Amazon Kendra experience.
+      roleArn:
+        type: string
+        description: The IAM role ARN with permission to run GetUserContext.
+      description:
+        type: string
+        description: An optional description for the experience.
+  steps:
+  - stepId: confirmIndexActive
+    description: >-
+      Confirm the target index is ACTIVE before attaching an experience, since an
+      experience can only serve a usable index.
+    operationId: DescribeIndex
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.DescribeIndex
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      indexStatus: $response.body#/Status
+    onSuccess:
+    - name: indexActive
+      type: goto
+      stepId: createExperience
+      criteria:
+      - context: $response.body
+        condition: $.Status == "ACTIVE"
+        type: jsonpath
+  - stepId: createExperience
+    description: >-
+      Create the hosted search experience application on top of the active index.
+    operationId: CreateExperience
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.CreateExperience
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.experienceName
+        RoleArn: $inputs.roleArn
+        Description: $inputs.description
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      experienceId: $response.body#/Id
+  - stepId: confirmExperience
+    description: >-
+      List the index experiences to confirm the newly created experience is
+      registered against the index.
+    operationId: ListExperiences
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.ListExperiences
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      experienceSummaryItems: $response.body#/SummaryItems
+  outputs:
+    experienceId: $steps.createExperience.outputs.experienceId
+    experienceSummaryItems: $steps.confirmExperience.outputs.experienceSummaryItems

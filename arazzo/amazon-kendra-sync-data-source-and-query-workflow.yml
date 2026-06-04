@@ -1,0 +1,120 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Sync Data Source and Query
+  summary: Start a data source sync job on an existing connector, wait for it to succeed, then query the refreshed index.
+  description: >-
+    Triggers an on-demand synchronization of an existing data source connector,
+    polls ListDataSourceSyncJobs until the started job leaves the SYNCING state
+    and reports SUCCEEDED, then runs a Query so the freshly crawled content is
+    reflected in search results. Each step inlines its request, including the AWS
+    JSON protocol X-Amz-Target header, so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: sync-data-source-and-query
+  summary: Start a sync job, wait for SUCCEEDED, then query the refreshed index.
+  description: >-
+    Starts a synchronization job on an existing data source, polls the sync job
+    list until it succeeds, and runs a search query against the refreshed index.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - dataSourceId
+    - queryText
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index that owns the data source.
+      dataSourceId:
+        type: string
+        description: The identifier of the data source to synchronize.
+      queryText:
+        type: string
+        description: The search query to run once the sync completes.
+  steps:
+  - stepId: startSyncJob
+    description: >-
+      Start an on-demand synchronization job for the data source connector so it
+      re-crawls and re-indexes the source repository.
+    operationId: StartDataSourceSyncJob
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: DataSourceId
+      in: path
+      value: $inputs.dataSourceId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.StartDataSourceSyncJob
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionId: $response.body#/ExecutionId
+  - stepId: waitForSyncComplete
+    description: >-
+      Poll the list of sync jobs until the most recent job leaves the SYNCING
+      state and reports SUCCEEDED, confirming the crawl finished.
+    operationId: ListDataSourceSyncJobs
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: DataSourceId
+      in: path
+      value: $inputs.dataSourceId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.ListDataSourceSyncJobs
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      history: $response.body#/History
+    onSuccess:
+    - name: syncSucceeded
+      type: goto
+      stepId: query
+      criteria:
+      - context: $response.body
+        condition: $.History[0].Status == "SUCCEEDED"
+        type: jsonpath
+    onFailure:
+    - name: retrySyncStatus
+      type: retry
+      stepId: waitForSyncComplete
+      retryAfter: 30
+      retryLimit: 20
+      criteria:
+      - context: $response.body
+        condition: $.History[0].Status == "SYNCING"
+        type: jsonpath
+  - stepId: query
+    description: >-
+      Run the search query against the refreshed index so newly synced documents
+      are reflected in the results.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+  outputs:
+    executionId: $steps.startSyncJob.outputs.executionId
+    queryId: $steps.query.outputs.queryId
+    resultItems: $steps.query.outputs.resultItems

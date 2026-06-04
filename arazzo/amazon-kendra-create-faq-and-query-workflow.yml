@@ -1,0 +1,139 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Create FAQ and Query
+  summary: Load an FAQ file from S3 into an index, wait until it is active, then query for FAQ-backed answers.
+  description: >-
+    Loads a set of frequently asked questions from an Amazon S3 file into an
+    Amazon Kendra index, polls DescribeFaq until the FAQ leaves the CREATING
+    state and reaches ACTIVE, then runs a Query so the new question/answer pairs
+    can surface as QUESTION_ANSWER results. Each step inlines its request,
+    including the AWS JSON protocol X-Amz-Target header, so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-faq-and-query
+  summary: Create an FAQ from an S3 file, wait for ACTIVE, then query for answers.
+  description: >-
+    Creates an FAQ from an S3 input file, polls until the FAQ is ACTIVE, and runs
+    a search query that can return the new FAQ answers.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - faqName
+    - s3Path
+    - roleArn
+    - queryText
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index to add the FAQ to.
+      faqName:
+        type: string
+        description: The name to associate with the FAQ.
+      s3Path:
+        type: object
+        description: The S3 location of the FAQ input data.
+      roleArn:
+        type: string
+        description: The IAM role ARN granting Kendra access to the S3 file.
+      fileFormat:
+        type: string
+        description: The format of the FAQ input file, CSV, CSV_WITH_HEADER, or JSON.
+      description:
+        type: string
+        description: An optional description for the FAQ.
+      queryText:
+        type: string
+        description: The search query to run once the FAQ is active.
+  steps:
+  - stepId: createFaq
+    description: >-
+      Create the FAQ from the supplied S3 input file. The FAQ begins in the
+      CREATING state while Kendra ingests the question/answer pairs.
+    operationId: CreateFaq
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.CreateFaq
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.faqName
+        S3Path: $inputs.s3Path
+        RoleArn: $inputs.roleArn
+        FileFormat: $inputs.fileFormat
+        Description: $inputs.description
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      faqId: $response.body#/Id
+  - stepId: waitForFaqActive
+    description: >-
+      Poll the FAQ until ingestion completes. The FAQ reports CREATING while it
+      is being built and ACTIVE once its answers are searchable.
+    operationId: DescribeFaq
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: FaqId
+      in: path
+      value: $steps.createFaq.outputs.faqId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.DescribeFaq
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      faqStatus: $response.body#/Status
+    onSuccess:
+    - name: faqReady
+      type: goto
+      stepId: query
+      criteria:
+      - context: $response.body
+        condition: $.Status == "ACTIVE"
+        type: jsonpath
+    onFailure:
+    - name: retryDescribeFaq
+      type: retry
+      stepId: waitForFaqActive
+      retryAfter: 15
+      retryLimit: 20
+      criteria:
+      - context: $response.body
+        condition: $.Status == "CREATING"
+        type: jsonpath
+  - stepId: query
+    description: >-
+      Run the search query against the index so the newly loaded FAQ answers can
+      surface as QUESTION_ANSWER result items.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+  outputs:
+    faqId: $steps.createFaq.outputs.faqId
+    queryId: $steps.query.outputs.queryId
+    resultItems: $steps.query.outputs.resultItems

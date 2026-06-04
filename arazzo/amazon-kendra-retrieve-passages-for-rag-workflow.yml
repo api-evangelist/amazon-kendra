@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Retrieve Passages for RAG
+  summary: Retrieve semantically relevant passages for a question and run a parallel ranked query to enrich a RAG context.
+  description: >-
+    Builds the context for a retrieval-augmented-generation prompt by calling
+    Retrieve to pull the most relevant text passages for an input question, then
+    running a standard Query for the same text to capture ranked document results
+    and any extractive answers. Combining both gives a downstream LLM both long
+    passages and short ranked answers. Each step inlines its request, including
+    the AWS JSON protocol X-Amz-Target header, so the flow can be read and
+    executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: retrieve-passages-for-rag
+  summary: Retrieve passages and run a ranked query for the same question.
+  description: >-
+    Retrieves relevant passages for an input question and runs a parallel ranked
+    query, assembling both into a combined context for RAG.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - queryText
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index to retrieve from.
+      queryText:
+        type: string
+        description: The question to retrieve passages and ranked results for.
+      attributeFilter:
+        type: object
+        description: Optional attribute filter to scope results.
+      pageSize:
+        type: integer
+        description: Optional number of results per page.
+  steps:
+  - stepId: retrievePassages
+    description: >-
+      Retrieve the most relevant text passages for the input question for use as
+      grounding context in a RAG prompt.
+    operationId: Retrieve
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Retrieve
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+        AttributeFilter: $inputs.attributeFilter
+        PageSize: $inputs.pageSize
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+  - stepId: rankedQuery
+    description: >-
+      Run a standard ranked query for the same question to capture extractive
+      answers and ranked document results alongside the retrieved passages.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+        AttributeFilter: $inputs.attributeFilter
+        PageSize: $inputs.pageSize
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+      totalResults: $response.body#/TotalNumberOfResults
+  outputs:
+    retrievedPassages: $steps.retrievePassages.outputs.resultItems
+    rankedResults: $steps.rankedQuery.outputs.resultItems
+    totalResults: $steps.rankedQuery.outputs.totalResults

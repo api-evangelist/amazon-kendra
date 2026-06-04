@@ -1,0 +1,110 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Reschedule and Resync Data Source
+  summary: Update a data source's sync schedule, trigger an immediate sync, and wait for that sync to succeed.
+  description: >-
+    Updates the recurring crawl schedule on an existing Amazon Kendra data source
+    connector, immediately kicks off an on-demand sync so the new content is
+    available without waiting for the next scheduled window, and polls
+    ListDataSourceSyncJobs until that sync leaves SYNCING and reaches SUCCEEDED.
+    Each step inlines its request, including the AWS JSON protocol X-Amz-Target
+    header, so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: reschedule-and-resync-data-source
+  summary: Update a data source schedule, start a sync, and wait for SUCCEEDED.
+  description: >-
+    Updates the data source sync schedule, starts an on-demand sync, and polls
+    until the sync succeeds.
+  inputs:
+    type: object
+    required:
+    - indexId
+    - dataSourceId
+    properties:
+      indexId:
+        type: string
+        description: The identifier of the index that owns the data source.
+      dataSourceId:
+        type: string
+        description: The identifier of the data source to reschedule and resync.
+  steps:
+  - stepId: updateSchedule
+    description: >-
+      Update the data source connector with its new recurring crawl schedule.
+    operationId: UpdateDataSource
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: DataSourceId
+      in: path
+      value: $inputs.dataSourceId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.UpdateDataSource
+    successCriteria:
+    - condition: $statusCode == 200
+  - stepId: startSyncJob
+    description: >-
+      Start an immediate on-demand sync so the updated configuration takes effect
+      without waiting for the next scheduled window.
+    operationId: StartDataSourceSyncJob
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: DataSourceId
+      in: path
+      value: $inputs.dataSourceId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.StartDataSourceSyncJob
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      executionId: $response.body#/ExecutionId
+  - stepId: waitForSyncComplete
+    description: >-
+      Poll the sync job list until the most recent job leaves SYNCING and reports
+      SUCCEEDED.
+    operationId: ListDataSourceSyncJobs
+    parameters:
+    - name: IndexId
+      in: path
+      value: $inputs.indexId
+    - name: DataSourceId
+      in: path
+      value: $inputs.dataSourceId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.ListDataSourceSyncJobs
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      history: $response.body#/History
+    onSuccess:
+    - name: syncSucceeded
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.History[0].Status == "SUCCEEDED"
+        type: jsonpath
+    onFailure:
+    - name: retrySyncStatus
+      type: retry
+      stepId: waitForSyncComplete
+      retryAfter: 30
+      retryLimit: 20
+      criteria:
+      - context: $response.body
+        condition: $.History[0].Status == "SYNCING"
+        type: jsonpath
+  outputs:
+    executionId: $steps.startSyncJob.outputs.executionId
+    history: $steps.waitForSyncComplete.outputs.history

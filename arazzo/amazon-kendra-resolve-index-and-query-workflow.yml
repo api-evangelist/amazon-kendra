@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Amazon Kendra Resolve Index by Name and Query
+  summary: Look up an index by name, confirm it is active, and run a search query against it.
+  description: >-
+    Resolves a human-friendly index name to its identifier by listing the
+    account indexes and matching on name, confirms with DescribeIndex that the
+    matched index is ACTIVE before issuing traffic, and then runs a Query so
+    callers can search by index name without already knowing the index id. Each
+    step inlines its request, including the AWS JSON protocol X-Amz-Target
+    header, so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: kendraApi
+  url: ../openapi/amazon-kendra-openapi.yml
+  type: openapi
+workflows:
+- workflowId: resolve-index-and-query
+  summary: Find an index by name, confirm it is ACTIVE, then query it.
+  description: >-
+    Lists indexes to resolve a name to an id, confirms the index is ACTIVE with
+    DescribeIndex, and runs a search query.
+  inputs:
+    type: object
+    required:
+    - indexName
+    - queryText
+    properties:
+      indexName:
+        type: string
+        description: The name of the index to search.
+      queryText:
+        type: string
+        description: The search query to run against the resolved index.
+      pageSize:
+        type: integer
+        description: Optional number of results to return per page.
+  steps:
+  - stepId: listIndexes
+    description: >-
+      List the account indexes and capture the id of the index whose name
+      matches the supplied indexName.
+    operationId: ListIndexes
+    parameters:
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.ListIndexes
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      matchedIndexId: $response.body#/IndexConfigurationSummaryItems/0/Id
+  - stepId: confirmIndexActive
+    description: >-
+      Confirm the matched index is ACTIVE before sending query traffic, so
+      queries are not issued against an index that is still building or failed.
+    operationId: DescribeIndex
+    parameters:
+    - name: IndexId
+      in: path
+      value: $steps.listIndexes.outputs.matchedIndexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.DescribeIndex
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      indexStatus: $response.body#/Status
+    onSuccess:
+    - name: indexActive
+      type: goto
+      stepId: query
+      criteria:
+      - context: $response.body
+        condition: $.Status == "ACTIVE"
+        type: jsonpath
+  - stepId: query
+    description: >-
+      Run the search query against the resolved, active index and return the
+      ranked result items.
+    operationId: Query
+    parameters:
+    - name: IndexId
+      in: path
+      value: $steps.listIndexes.outputs.matchedIndexId
+    - name: X-Amz-Target
+      in: header
+      value: AWSKendraFrontendService.Query
+    requestBody:
+      contentType: application/json
+      payload:
+        QueryText: $inputs.queryText
+        PageSize: $inputs.pageSize
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      queryId: $response.body#/QueryId
+      resultItems: $response.body#/ResultItems
+      totalResults: $response.body#/TotalNumberOfResults
+  outputs:
+    indexId: $steps.listIndexes.outputs.matchedIndexId
+    queryId: $steps.query.outputs.queryId
+    resultItems: $steps.query.outputs.resultItems
