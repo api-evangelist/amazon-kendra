@@ -1,222 +1,226 @@
 name: Amazon Kendra
 segments:
-- Search
-- Machine Learning
-description: Amazon Kendra is an intelligent enterprise search service powered by machine learning that enables organizations
-  to index and search across multiple data sources, delivering highly accurate and relevant answers to natural language queries.
+  - Search
+  - Machine Learning
+description: >-
+  Amazon Kendra is an intelligent enterprise search service powered by machine learning that enables organizations to
+  index and search across multiple data sources, delivering highly accurate and relevant answers to natural language
+  queries.
 url: https://aws.amazon.com/kendra/
 type: Index
 image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 tags:
-- AI
-- AWS
-- Enterprise Search
-- Knowledge Management
-- Machine Learning
-- Natural Language
+  - AI
+  - AWS
+  - Enterprise Search
+  - Knowledge Management
+  - Machine Learning
+  - Natural Language
 created: '2024-01-15'
 modified: '2026-05-19'
 apis:
-- name: Amazon Kendra API
-  description: The Amazon Kendra API provides programmatic access to create and manage intelligent search indexes, configure
-    data source connectors, submit queries, and manage relevance tuning for ML-powered enterprise search.
-  image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
-  humanURL: https://aws.amazon.com/kendra/
-  baseURL: https://kendra.amazonaws.com
-  tags:
-  - Enterprise Search
-  - ML Search
-  - Natural Language Processing
-  properties:
+  - name: Amazon Kendra API
+    description: >-
+      The Amazon Kendra API provides programmatic access to create and manage intelligent search indexes, configure data
+      source connectors, submit queries, and manage relevance tuning for ML-powered enterprise search.
+    image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+    humanURL: https://aws.amazon.com/kendra/
+    baseURL: https://kendra.amazonaws.com
+    tags:
+      - Enterprise Search
+      - ML Search
+      - Natural Language Processing
+    properties:
+      - type: Documentation
+        url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+      - type: OpenAPI
+        url: https://api.apis.guru/v2/specs/amazonaws.com/kendra/2019-02-03/openapi.yaml
+      - type: Pricing
+        url: https://aws.amazon.com/kendra/pricing/
+      - type: GettingStarted
+        url: https://aws.amazon.com/kendra/getting-started/
+      - type: FAQ
+        url: https://aws.amazon.com/kendra/faqs/
+      - type: Features
+        url: https://aws.amazon.com/kendra/features/
+      - type: Documentation
+        url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+      - type: APIReference
+        url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+      - type: OpenAPI
+        url: openapi/amazon-kendra-openapi.yml
+      - type: JSONLD
+        url: json-ld/amazon-kendra-context.jsonld
+      - type: JSONSchema
+        url: json-schema/amazon-kendra-index-schema.json
+      - type: JSONSchema
+        url: json-schema/amazon-kendra-data-source-schema.json
+      - type: JSONSchema
+        url: json-schema/amazon-kendra-query-result-schema.json
+      - type: JSONSchema
+        url: json-schema/amazon-kendra-faq-schema.json
+common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/amazon-kendra/overview
+  - type: ArazzoWorkflows
+    url: arazzo/
+    workflows:
+      - url: arazzo/amazon-kendra-create-faq-and-query-workflow.yml
+        name: Amazon Kendra Create FAQ and Query
+        summary: Load an FAQ file from S3 into an index, wait until it is active, then query for FAQ-backed answers.
+      - url: arazzo/amazon-kendra-create-search-experience-workflow.yml
+        name: Amazon Kendra Create Search Experience
+        summary: >-
+          Wait for an index to be active, create a hosted search experience on it, and confirm it via the experiences
+          list.
+      - url: arazzo/amazon-kendra-create-thesaurus-and-query-workflow.yml
+        name: Amazon Kendra Create Thesaurus and Query
+        summary: >-
+          Load a custom synonym thesaurus from S3 into an index, wait until it is active, then run a synonym-aware
+          query.
+      - url: arazzo/amazon-kendra-ingest-documents-and-query-workflow.yml
+        name: Amazon Kendra Ingest Documents and Query
+        summary: Directly upload documents into an index, wait until they finish indexing, then run a search query.
+      - url: arazzo/amazon-kendra-provision-index-and-sync-workflow.yml
+        name: Amazon Kendra Provision Index and Start First Sync
+        summary: Create an index, wait until it is active, attach a data source, and kick off the first sync job.
+      - url: arazzo/amazon-kendra-query-suggestions-then-search-workflow.yml
+        name: Amazon Kendra Query Suggestions then Search
+        summary: Generate type-ahead query suggestions for a partial query, then run a full search using the top suggestion.
+      - url: arazzo/amazon-kendra-refresh-documents-workflow.yml
+        name: Amazon Kendra Refresh Documents
+        summary: >-
+          Remove stale documents from an index, upload their refreshed versions, and wait until the new versions are
+          indexed.
+      - url: arazzo/amazon-kendra-reschedule-and-resync-data-source-workflow.yml
+        name: Amazon Kendra Reschedule and Resync Data Source
+        summary: Update a data source's sync schedule, trigger an immediate sync, and wait for that sync to succeed.
+      - url: arazzo/amazon-kendra-resolve-index-and-query-workflow.yml
+        name: Amazon Kendra Resolve Index by Name and Query
+        summary: Look up an index by name, confirm it is active, and run a search query against it.
+      - url: arazzo/amazon-kendra-retrieve-passages-for-rag-workflow.yml
+        name: Amazon Kendra Retrieve Passages for RAG
+        summary: >-
+          Retrieve semantically relevant passages for a question and run a parallel ranked query to enrich a RAG
+          context.
+      - url: arazzo/amazon-kendra-sync-data-source-and-query-workflow.yml
+        name: Amazon Kendra Sync Data Source and Query
+        summary: Start a data source sync job on an existing connector, wait for it to succeed, then query the refreshed index.
+      - url: arazzo/amazon-kendra-teardown-data-source-and-index-workflow.yml
+        name: Amazon Kendra Teardown Data Source and Index
+        summary: Delete a data source connector, confirm it is gone, then delete the index that owned it.
+  - type: Blog
+    url: https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/amazon-kendra/
+  - type: Support
+    url: https://aws.amazon.com/premiumsupport/
+  - type: Console
+    url: https://console.aws.amazon.com/kendra/home
+  - type: CLI
+    url: https://docs.aws.amazon.com/cli/latest/reference/kendra/
+  - type: SDK
+    url: https://aws.amazon.com/tools/
+  - type: StatusPage
+    url: https://status.aws.amazon.com/
+  - type: Compliance
+    url: https://aws.amazon.com/compliance/
+  - type: TermsOfService
+    url: https://aws.amazon.com/service-terms/
+  - type: Portal
+    url: https://aws.amazon.com/kendra/
   - type: Documentation
-    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
-  - type: OpenAPI
-    url: https://api.apis.guru/v2/specs/amazonaws.com/kendra/2019-02-03/openapi.yaml
+    url: https://docs.aws.amazon.com/kendra/
   - type: Pricing
     url: https://aws.amazon.com/kendra/pricing/
   - type: GettingStarted
     url: https://aws.amazon.com/kendra/getting-started/
   - type: FAQ
     url: https://aws.amazon.com/kendra/faqs/
+  - type: PrivacyPolicy
+    url: https://aws.amazon.com/privacy/
+  - type: SignUp
+    url: https://portal.aws.amazon.com/billing/signup
+  - type: GitHubOrganization
+    url: https://github.com/aws
   - type: Features
-    url: https://aws.amazon.com/kendra/features/
-  - type: Documentation
-    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
-  - type: APIReference
-    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
-  - type: OpenAPI
-    url: openapi/amazon-kendra-openapi.yml
-  - type: JSONLD
-    url: json-ld/amazon-kendra-context.jsonld
-  - type: JSONSchema
-    url: json-schema/amazon-kendra-index-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-kendra-data-source-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-kendra-query-result-schema.json
-  - type: JSONSchema
-    url: json-schema/amazon-kendra-faq-schema.json
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-data-sources.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-documents.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-experience.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-faqs.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-indexes.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-queries.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-query-suggestions.yaml
-  - type: NaftikoCapability
-    url: capabilities/amazon-kendra-thesaurus.yaml
-common:
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/amazon-kendra-create-faq-and-query-workflow.yml
-    name: Amazon Kendra Create FAQ and Query
-    summary: Load an FAQ file from S3 into an index, wait until it is active, then query for FAQ-backed answers.
-  - url: arazzo/amazon-kendra-create-search-experience-workflow.yml
-    name: Amazon Kendra Create Search Experience
-    summary: Wait for an index to be active, create a hosted search experience on it, and confirm it via the experiences list.
-  - url: arazzo/amazon-kendra-create-thesaurus-and-query-workflow.yml
-    name: Amazon Kendra Create Thesaurus and Query
-    summary: Load a custom synonym thesaurus from S3 into an index, wait until it is active, then run a synonym-aware query.
-  - url: arazzo/amazon-kendra-ingest-documents-and-query-workflow.yml
-    name: Amazon Kendra Ingest Documents and Query
-    summary: Directly upload documents into an index, wait until they finish indexing, then run a search query.
-  - url: arazzo/amazon-kendra-provision-index-and-sync-workflow.yml
-    name: Amazon Kendra Provision Index and Start First Sync
-    summary: Create an index, wait until it is active, attach a data source, and kick off the first sync job.
-  - url: arazzo/amazon-kendra-query-suggestions-then-search-workflow.yml
-    name: Amazon Kendra Query Suggestions then Search
-    summary: Generate type-ahead query suggestions for a partial query, then run a full search using the top suggestion.
-  - url: arazzo/amazon-kendra-refresh-documents-workflow.yml
-    name: Amazon Kendra Refresh Documents
-    summary: Remove stale documents from an index, upload their refreshed versions, and wait until the new versions are indexed.
-  - url: arazzo/amazon-kendra-reschedule-and-resync-data-source-workflow.yml
-    name: Amazon Kendra Reschedule and Resync Data Source
-    summary: Update a data source's sync schedule, trigger an immediate sync, and wait for that sync to succeed.
-  - url: arazzo/amazon-kendra-resolve-index-and-query-workflow.yml
-    name: Amazon Kendra Resolve Index by Name and Query
-    summary: Look up an index by name, confirm it is active, and run a search query against it.
-  - url: arazzo/amazon-kendra-retrieve-passages-for-rag-workflow.yml
-    name: Amazon Kendra Retrieve Passages for RAG
-    summary: Retrieve semantically relevant passages for a question and run a parallel ranked query to enrich a RAG context.
-  - url: arazzo/amazon-kendra-sync-data-source-and-query-workflow.yml
-    name: Amazon Kendra Sync Data Source and Query
-    summary: Start a data source sync job on an existing connector, wait for it to succeed, then query the refreshed index.
-  - url: arazzo/amazon-kendra-teardown-data-source-and-index-workflow.yml
-    name: Amazon Kendra Teardown Data Source and Index
-    summary: Delete a data source connector, confirm it is gone, then delete the index that owned it.
-- type: Blog
-  url: https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/amazon-kendra/
-- type: Support
-  url: https://aws.amazon.com/premiumsupport/
-- type: Console
-  url: https://console.aws.amazon.com/kendra/home
-- type: CLI
-  url: https://docs.aws.amazon.com/cli/latest/reference/kendra/
-- type: SDK
-  url: https://aws.amazon.com/tools/
-- type: StatusPage
-  url: https://status.aws.amazon.com/
-- type: Compliance
-  url: https://aws.amazon.com/compliance/
-- type: TermsOfService
-  url: https://aws.amazon.com/service-terms/
-- type: Portal
-  url: https://aws.amazon.com/kendra/
-- type: Documentation
-  url: https://docs.aws.amazon.com/kendra/
-- type: Pricing
-  url: https://aws.amazon.com/kendra/pricing/
-- type: GettingStarted
-  url: https://aws.amazon.com/kendra/getting-started/
-- type: FAQ
-  url: https://aws.amazon.com/kendra/faqs/
-- type: PrivacyPolicy
-  url: https://aws.amazon.com/privacy/
-- type: SignUp
-  url: https://portal.aws.amazon.com/billing/signup
-- type: GitHubOrganization
-  url: https://github.com/aws
-- type: Features
-  data:
-  - name: Intelligent Search
-    description: ML-powered semantic search that understands natural language queries and context to return highly accurate
-      answers from enterprise content.
-  - name: GenAI RAG Support
-    description: Kendra Retriever API enables retrieval-augmented generation workflows with optimized passage chunking and
-      ACL-based filtering for LLM integration.
-  - name: Data Source Connectors
-    description: Native connectors for Amazon S3, SharePoint, Salesforce, ServiceNow, Google Drive, Confluence, and many more
-      data repositories.
-  - name: Relevance Tuning
-    description: Fine-tune search results based on document freshness, authoritative sources, and custom synonyms without
-      ML expertise.
-  - name: Experience Builder
-    description: No-code visual interface to build, customize, and launch search applications with drag-and-drop components.
-  - name: Search Analytics Dashboard
-    description: Visibility into quality and usability metrics and user interaction patterns to identify content gaps.
-  - name: Custom Document Enrichment
-    description: Preprocessing capabilities for metadata enrichment, document classification, entity extraction, and AWS AI
-      service integration.
-  - name: Incremental Learning
-    description: Learns from user interactions and feedback to promote preferred documents to the top of search results over
-      time.
-- type: UseCases
-  data:
-  - name: Employee Productivity
-    description: Help employees find accurate answers and data-driven insights across internal knowledge bases and document
-      repositories.
-  - name: Customer Service
-    description: Power self-service chatbots and agent-assist solutions for contact centers with intelligent search.
-  - name: SaaS Application Integration
-    description: Integrate intelligent search and conversational AI into customer-facing applications via the Kendra API.
-  - name: Generative AI Applications
-    description: Use Kendra GenAI indices in Amazon Q Business and Amazon Bedrock knowledge bases to build RAG applications.
-  - name: Enterprise Knowledge Management
-    description: Index and search across multiple heterogeneous data sources to create a unified knowledge search experience.
-- type: Integrations
-  data:
-  - name: Amazon Bedrock
-    description: Use Kendra GenAI indices as knowledge bases in Amazon Bedrock for building generative AI applications.
-  - name: Amazon Q Business
-    description: Integrate Kendra indices with Amazon Q Business for AI-powered enterprise assistant experiences.
-  - name: Amazon Lex
-    description: Power Lex chatbots with Kendra search for FAQ-based conversational experiences.
-  - name: Amazon S3
-    description: Native data source connector for indexing documents stored in Amazon S3 buckets.
-  - name: Microsoft SharePoint
-    description: Native connector to index and search SharePoint Online and SharePoint Server content.
-  - name: Salesforce
-    description: Index Salesforce objects and knowledge articles for enterprise search.
-  - name: ServiceNow
-    description: Connect to ServiceNow to index knowledge base articles and service catalog items.
-  - name: Amazon Comprehend
-    description: Use Comprehend for entity extraction and metadata enrichment during custom document enrichment.
-- type: SpectralRules
-  url: rules/amazon-kendra-spectral-rules.yml
-- type: Vocabulary
-  url: vocabulary/amazon-kendra-vocabulary.yaml
-- type: Integrations
-  url: https://aws.amazon.com/marketplace
+    data:
+      - name: Intelligent Search
+        description: >-
+          ML-powered semantic search that understands natural language queries and context to return highly accurate
+          answers from enterprise content.
+      - name: GenAI RAG Support
+        description: >-
+          Kendra Retriever API enables retrieval-augmented generation workflows with optimized passage chunking and
+          ACL-based filtering for LLM integration.
+      - name: Data Source Connectors
+        description: >-
+          Native connectors for Amazon S3, SharePoint, Salesforce, ServiceNow, Google Drive, Confluence, and many more
+          data repositories.
+      - name: Relevance Tuning
+        description: >-
+          Fine-tune search results based on document freshness, authoritative sources, and custom synonyms without ML
+          expertise.
+      - name: Experience Builder
+        description: No-code visual interface to build, customize, and launch search applications with drag-and-drop components.
+      - name: Search Analytics Dashboard
+        description: Visibility into quality and usability metrics and user interaction patterns to identify content gaps.
+      - name: Custom Document Enrichment
+        description: >-
+          Preprocessing capabilities for metadata enrichment, document classification, entity extraction, and AWS AI
+          service integration.
+      - name: Incremental Learning
+        description: >-
+          Learns from user interactions and feedback to promote preferred documents to the top of search results over
+          time.
+  - type: UseCases
+    data:
+      - name: Employee Productivity
+        description: >-
+          Help employees find accurate answers and data-driven insights across internal knowledge bases and document
+          repositories.
+      - name: Customer Service
+        description: Power self-service chatbots and agent-assist solutions for contact centers with intelligent search.
+      - name: SaaS Application Integration
+        description: Integrate intelligent search and conversational AI into customer-facing applications via the Kendra API.
+      - name: Generative AI Applications
+        description: Use Kendra GenAI indices in Amazon Q Business and Amazon Bedrock knowledge bases to build RAG applications.
+      - name: Enterprise Knowledge Management
+        description: Index and search across multiple heterogeneous data sources to create a unified knowledge search experience.
+  - type: Integrations
+    data:
+      - name: Amazon Bedrock
+        description: Use Kendra GenAI indices as knowledge bases in Amazon Bedrock for building generative AI applications.
+      - name: Amazon Q Business
+        description: Integrate Kendra indices with Amazon Q Business for AI-powered enterprise assistant experiences.
+      - name: Amazon Lex
+        description: Power Lex chatbots with Kendra search for FAQ-based conversational experiences.
+      - name: Amazon S3
+        description: Native data source connector for indexing documents stored in Amazon S3 buckets.
+      - name: Microsoft SharePoint
+        description: Native connector to index and search SharePoint Online and SharePoint Server content.
+      - name: Salesforce
+        description: Index Salesforce objects and knowledge articles for enterprise search.
+      - name: ServiceNow
+        description: Connect to ServiceNow to index knowledge base articles and service catalog items.
+      - name: Amazon Comprehend
+        description: Use Comprehend for entity extraction and metadata enrichment during custom document enrichment.
+  - type: SpectralRules
+    url: rules/amazon-kendra-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/amazon-kendra-vocabulary.yaml
+  - type: Integrations
+    url: https://aws.amazon.com/marketplace
 integrations:
-- name: Sign in
-- name: Agent Mode
-- name: Why AWS Marketplace?
-- name: Get started in AWS Marketplace
-- name: Industry
-- name: Resources
-- name: Become a Channel Partner
-- name: Sell in AWS Marketplace
-- name: Manage Your Account
+  - name: Sign in
+  - name: Agent Mode
+  - name: Why AWS Marketplace?
+  - name: Get started in AWS Marketplace
+  - name: Industry
+  - name: Resources
+  - name: Become a Channel Partner
+  - name: Sell in AWS Marketplace
+  - name: Manage Your Account
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
-  url: https://apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
+    url: https://apievangelist.com
 include: []
