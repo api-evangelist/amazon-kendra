@@ -1,0 +1,646 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Kendra API",
+    "version": "2019-02-03"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Indexes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes"
+          },
+          "docs": "Lists the Amazon Kendra indexes in the current account."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Amazon Kendra index for enterprise search."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Describe Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Gets information about an existing Amazon Kendra index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Update Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Updates an existing Amazon Kendra index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Delete Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Deletes an existing Amazon Kendra index."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Data Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Data Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Lists the data source connectors for an index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a data source connector that connects to a data repository."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Describe Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Gets information about an Amazon Kendra data source connector."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Update Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Updates an Amazon Kendra data source connector."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Delete Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Deletes an Amazon Kendra data source connector."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra List Data Source Sync Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId/sync-jobs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Gets statistics about synchronization of users and groups with your data source."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Start Data Source Sync Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId/sync-jobs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Starts a synchronization job for a data source connector."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra Batch Put Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/documents",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds one or more documents to an Amazon Kendra index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Batch Delete Document",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/documents",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Removes one or more documents from an Amazon Kendra index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Batch Get Document Status",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/documents/status",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns the indexing status for one or more documents submitted with BatchPutDocument."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/query",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches an active index with a query and returns relevant documents and answers."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/retrieve",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves relevant passages or text excerpts given an input query for use in RAG applications."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Experience",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Experiences",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/experiences",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Lists one or more Amazon Kendra experiences."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Experience",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/experiences",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Amazon Kendra experience such as a search application."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Query Suggestions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra Get Query Suggestions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/query-suggestions",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Fetches the queries that are suggested to your users based on their query history."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "FAQs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List FAQs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Gets a list of FAQ lists associated with an index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create FAQ",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a set of frequently asked questions (FAQs) using a specified FAQ file stored in an Amazon S3 bucket."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Describe FAQ",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs/:FaqId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "FaqId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the FAQ."
+              }
+            ]
+          },
+          "docs": "Gets information about an FAQ list."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Delete FAQ",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs/:FaqId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "FaqId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the FAQ."
+              }
+            ]
+          },
+          "docs": "Removes an FAQ from an index."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Thesaurus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Thesauri",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/thesaurus",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Lists the thesauri for an index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Thesaurus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/thesaurus",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a thesaurus for an index. The thesaurus contains a list of synonyms in Solr format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
