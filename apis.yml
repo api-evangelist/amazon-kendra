@@ -60,6 +60,14 @@ apis:
       - type: JSONSchema
         url: json-schema/amazon-kendra-faq-schema.json
 common:
+  - type: TrustCenter
+    url: security/amazon-kendra-trust-center.yml
+  - type: VulnerabilityDisclosure
+    url: security/amazon-kendra-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/amazon-kendra-domain-security.yml
+  - type: Authentication
+    url: authentication/amazon-kendra-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/amazon-kendra/overview
   - type: Arazzo
