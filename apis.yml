@@ -60,6 +60,8 @@ apis:
       - type: JSONSchema
         url: json-schema/amazon-kendra-faq-schema.json
 common:
+  - type: AgenticAccess
+    url: agentic-access/amazon-kendra-agentic-access.yml
   - type: TrustCenter
     url: security/amazon-kendra-trust-center.yml
   - type: VulnerabilityDisclosure
