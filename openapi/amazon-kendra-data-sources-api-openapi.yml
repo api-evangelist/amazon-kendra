@@ -1,0 +1,276 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra Data Sources API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: Data Sources
+  description: Operations for managing data source connectors
+paths:
+  /indexes/{IndexId}/data-sources:
+    post:
+      operationId: CreateDataSource
+      summary: Amazon Kendra Create Data Source
+      description: Creates a data source connector that connects to a data repository.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - Type
+              properties:
+                Name:
+                  type: string
+                  description: The name for the data source connector.
+                  example: example-value
+                Type:
+                  type: string
+                  description: 'The type of data source: S3, SHAREPOINT, SALESFORCE, etc.'
+                  example: example-value
+                Description:
+                  type: string
+                  description: A description for the data source.
+                Schedule:
+                  type: string
+                  description: Sets the frequency that Amazon Kendra checks the documents in your repository.
+                RoleArn:
+                  type: string
+                  description: The IAM role ARN for the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListDataSources
+      summary: Amazon Kendra List Data Sources
+      description: Lists the data source connectors for an index.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/data-sources/{DataSourceId}:
+    get:
+      operationId: DescribeDataSource
+      summary: Amazon Kendra Describe Data Source
+      description: Gets information about an Amazon Kendra data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: UpdateDataSource
+      summary: Amazon Kendra Update Data Source
+      description: Updates an Amazon Kendra data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: DeleteDataSource
+      summary: Amazon Kendra Delete Data Source
+      description: Deletes an Amazon Kendra data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/data-sources/{DataSourceId}/sync-jobs:
+    post:
+      operationId: StartDataSourceSyncJob
+      summary: Amazon Kendra Start Data Source Sync Job
+      description: Starts a synchronization job for a data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListDataSourceSyncJobs
+      summary: Amazon Kendra List Data Source Sync Jobs
+      description: Gets statistics about synchronization of users and groups with your data source.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication

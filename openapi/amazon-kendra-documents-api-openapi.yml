@@ -1,0 +1,154 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra Data Sources Documents API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: Documents
+  description: Operations for managing documents in the index
+paths:
+  /indexes/{IndexId}/documents:
+    post:
+      operationId: BatchPutDocument
+      summary: Amazon Kendra Batch Put Document
+      description: Adds one or more documents to an Amazon Kendra index.
+      tags:
+      - Documents
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Documents
+              properties:
+                Documents:
+                  type: array
+                  description: One or more documents to add to the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: BatchDeleteDocument
+      summary: Amazon Kendra Batch Delete Document
+      description: Removes one or more documents from an Amazon Kendra index.
+      tags:
+      - Documents
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - DocumentIdList
+              properties:
+                DocumentIdList:
+                  type: array
+                  description: The list of document IDs to delete.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/documents/status:
+    post:
+      operationId: BatchGetDocumentStatus
+      summary: Amazon Kendra Batch Get Document Status
+      description: Returns the indexing status for one or more documents submitted with BatchPutDocument.
+      tags:
+      - Documents
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - DocumentInfoList
+              properties:
+                DocumentInfoList:
+                  type: array
+                  description: A list of DocumentInfo objects that identify the documents for which to get the status.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication

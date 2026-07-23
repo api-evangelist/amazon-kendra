@@ -1,0 +1,83 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra Data Sources Query Suggestions API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: Query Suggestions
+  description: Operations for query autocompletion
+paths:
+  /indexes/{IndexId}/query-suggestions:
+    post:
+      operationId: GetQuerySuggestions
+      summary: Amazon Kendra Get Query Suggestions
+      description: Fetches the queries that are suggested to your users based on their query history.
+      tags:
+      - Query Suggestions
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - QueryText
+              properties:
+                QueryText:
+                  type: string
+                  description: The text of a user's query to generate query suggestions.
+                  example: example-value
+                MaxSuggestionsCount:
+                  type: integer
+                  description: The maximum number of query suggestions returned.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication

@@ -1,0 +1,183 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra Data Sources FAQs API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: FAQs
+  description: Operations for managing FAQ entries
+paths:
+  /indexes/{IndexId}/faqs:
+    post:
+      operationId: CreateFaq
+      summary: Amazon Kendra Create FAQ
+      description: Creates a set of frequently asked questions (FAQs) using a specified FAQ file stored in an Amazon S3 bucket.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - S3Path
+              - RoleArn
+              properties:
+                Name:
+                  type: string
+                  description: The name that should be associated with the FAQ.
+                  example: example-value
+                S3Path:
+                  type: object
+                  description: The S3 location of the FAQ input data.
+                RoleArn:
+                  type: string
+                  description: The Amazon Resource Name (ARN) of an IAM role.
+                  example: example-value
+                Description:
+                  type: string
+                  description: The description of the FAQ.
+                FileFormat:
+                  type: string
+                  description: The format of the input file. You can choose between a basic CSV format, a CSV format that includes customs attributes in a header, and a JSON format.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListFaqs
+      summary: Amazon Kendra List FAQs
+      description: Gets a list of FAQ lists associated with an index.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/faqs/{FaqId}:
+    get:
+      operationId: DescribeFaq
+      summary: Amazon Kendra Describe FAQ
+      description: Gets information about an FAQ list.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: FaqId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the FAQ.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: DeleteFaq
+      summary: Amazon Kendra Delete FAQ
+      description: Removes an FAQ from an index.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: FaqId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the FAQ.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication

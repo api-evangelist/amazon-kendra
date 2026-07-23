@@ -1,0 +1,137 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra Data Sources Queries API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: Queries
+  description: Operations for querying the search index
+paths:
+  /indexes/{IndexId}/query:
+    post:
+      operationId: Query
+      summary: Amazon Kendra Query
+      description: Searches an active index with a query and returns relevant documents and answers.
+      tags:
+      - Queries
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - QueryText
+              properties:
+                QueryText:
+                  type: string
+                  description: The input query text for the search.
+                  example: example-value
+                AttributeFilter:
+                  type: object
+                  description: Filters the search results based on document attributes.
+                PageNumber:
+                  type: integer
+                  description: Query results are paginated. The maximum number of results returned depends on the index.
+                PageSize:
+                  type: integer
+                  description: Sets the number of results that are returned for each page of results.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/retrieve:
+    post:
+      operationId: Retrieve
+      summary: Amazon Kendra Retrieve
+      description: Retrieves relevant passages or text excerpts given an input query for use in RAG applications.
+      tags:
+      - Queries
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - QueryText
+              properties:
+                QueryText:
+                  type: string
+                  description: The input query text to retrieve passages for.
+                  example: example-value
+                AttributeFilter:
+                  type: object
+                  description: Filters results based on document attributes.
+                PageNumber:
+                  type: integer
+                  description: The page number of results.
+                PageSize:
+                  type: integer
+                  description: The number of results to retrieve per page.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication

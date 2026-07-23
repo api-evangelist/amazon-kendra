@@ -1,0 +1,117 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra Data Sources Thesaurus API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: Thesaurus
+  description: Operations for managing custom synonyms
+paths:
+  /indexes/{IndexId}/thesaurus:
+    post:
+      operationId: CreateThesaurus
+      summary: Amazon Kendra Create Thesaurus
+      description: Creates a thesaurus for an index. The thesaurus contains a list of synonyms in Solr format.
+      tags:
+      - Thesaurus
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - RoleArn
+              - SourceS3Path
+              properties:
+                Name:
+                  type: string
+                  description: The name for the thesaurus.
+                  example: example-value
+                RoleArn:
+                  type: string
+                  description: An IAM role that gives Kendra permissions to access thesaurus file.
+                  example: example-value
+                SourceS3Path:
+                  type: object
+                  description: The S3 path where your thesaurus file sits in S3.
+                Description:
+                  type: string
+                  description: The description for the thesaurus.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListThesauri
+      summary: Amazon Kendra List Thesauri
+      description: Lists the thesauri for an index.
+      tags:
+      - Thesaurus
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication
