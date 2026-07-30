@@ -8,6 +8,19 @@ description: >-
   queries.
 url: https://aws.amazon.com/kendra/
 type: Index
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 tags:
   - AI
@@ -19,46 +32,262 @@ tags:
 created: '2024-01-15'
 modified: '2026-05-19'
 apis:
-  - name: Amazon Kendra API
-    description: >-
-      The Amazon Kendra API provides programmatic access to create and manage intelligent search indexes, configure data
-      source connectors, submit queries, and manage relevance tuning for ML-powered enterprise search.
-    image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
-    humanURL: https://aws.amazon.com/kendra/
-    baseURL: https://kendra.amazonaws.com
-    tags:
-      - Enterprise Search
-      - ML Search
-      - Natural Language Processing
-    properties:
-      - type: Documentation
-        url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
-      - type: OpenAPI
-        url: https://api.apis.guru/v2/specs/amazonaws.com/kendra/2019-02-03/openapi.yaml
-      - type: Pricing
-        url: https://aws.amazon.com/kendra/pricing/
-      - type: GettingStarted
-        url: https://aws.amazon.com/kendra/getting-started/
-      - type: FAQ
-        url: https://aws.amazon.com/kendra/faqs/
-      - type: Features
-        url: https://aws.amazon.com/kendra/features/
-      - type: Documentation
-        url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
-      - type: APIReference
-        url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
-      - type: OpenAPI
-        url: openapi/amazon-kendra-openapi.yml
-      - type: JSONLD
-        url: json-ld/amazon-kendra-context.jsonld
-      - type: JSONSchema
-        url: json-schema/amazon-kendra-index-schema.json
-      - type: JSONSchema
-        url: json-schema/amazon-kendra-data-source-schema.json
-      - type: JSONSchema
-        url: json-schema/amazon-kendra-query-result-schema.json
-      - type: JSONSchema
-        url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-data-sources-api
+  name: Amazon Kendra Data Sources API
+  description: Operations for managing data source connectors
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Data Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-data-sources-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-documents-api
+  name: Amazon Kendra Documents API
+  description: Operations for managing documents in the index
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Documents
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-documents-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-experience-api
+  name: Amazon Kendra Experience API
+  description: Operations for managing search experiences
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Experience
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-experience-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-faqs-api
+  name: Amazon Kendra FAQs API
+  description: Operations for managing FAQ entries
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - FAQs
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-faqs-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-indexes-api
+  name: Amazon Kendra Indexes API
+  description: Operations for creating and managing search indexes
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Indexes
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-indexes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-queries-api
+  name: Amazon Kendra Queries API
+  description: Operations for querying the search index
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Queries
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-queries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-query-suggestions-api
+  name: Amazon Kendra Query Suggestions API
+  description: Operations for query autocompletion
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Query Suggestions
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-query-suggestions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
+- aid: amazon-kendra:amazon-kendra-thesaurus-api
+  name: Amazon Kendra Thesaurus API
+  description: Operations for managing custom synonyms
+  humanURL: https://aws.amazon.com/kendra/
+  baseURL: https://kendra.amazonaws.com
+  tags:
+  - Thesaurus
+  properties:
+  - type: OpenAPI
+    url: openapi/amazon-kendra-thesaurus-api-openapi.yml
+  - type: Documentation
+    url: https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html
+  - type: Pricing
+    url: https://aws.amazon.com/kendra/pricing/
+  - type: GettingStarted
+    url: https://aws.amazon.com/kendra/getting-started/
+  - type: FAQ
+    url: https://aws.amazon.com/kendra/faqs/
+  - type: Features
+    url: https://aws.amazon.com/kendra/features/
+  - type: APIReference
+    url: https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html
+  - type: JSONLD
+    url: json-ld/amazon-kendra-context.jsonld
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-index-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-data-source-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-query-result-schema.json
+  - type: JSONSchema
+    url: json-schema/amazon-kendra-faq-schema.json
 common:
   - type: AgenticAccess
     url: agentic-access/amazon-kendra-agentic-access.yml
