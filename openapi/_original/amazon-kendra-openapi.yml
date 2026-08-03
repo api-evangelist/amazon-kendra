@@ -1,0 +1,1099 @@
+openapi: 3.1.0
+info:
+  title: Amazon Kendra API
+  description: The Amazon Kendra API enables programmatic management of intelligent enterprise search indexes, data source connectors, query execution, relevance tuning, and experience configuration 
+    for ML-powered search across organizational knowledge bases.
+  version: '2019-02-03'
+  contact:
+    name: AWS Support
+    url: https://aws.amazon.com/premiumsupport/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  x-logo:
+    url: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
+servers:
+- url: https://kendra.{region}.amazonaws.com
+  description: Amazon Kendra regional endpoint
+  variables:
+    region:
+      default: us-east-1
+      description: AWS region
+      enum:
+      - us-east-1
+      - us-east-2
+      - us-west-2
+      - eu-west-1
+      - ap-southeast-1
+      - ap-southeast-2
+      - ap-northeast-1
+security:
+- sigv4: []
+tags:
+- name: Indexes
+  description: Operations for creating and managing search indexes
+- name: Data Sources
+  description: Operations for managing data source connectors
+- name: Documents
+  description: Operations for managing documents in the index
+- name: Queries
+  description: Operations for querying the search index
+- name: Experience
+  description: Operations for managing search experiences
+- name: Query Suggestions
+  description: Operations for query autocompletion
+- name: FAQs
+  description: Operations for managing FAQ entries
+- name: Thesaurus
+  description: Operations for managing custom synonyms
+paths:
+  /indexes:
+    post:
+      operationId: CreateIndex
+      summary: Amazon Kendra Create Index
+      description: Creates a new Amazon Kendra index for enterprise search.
+      tags:
+      - Indexes
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - RoleArn
+              properties:
+                Name:
+                  type: string
+                  description: The name for the index.
+                  example: example-value
+                RoleArn:
+                  type: string
+                  description: The IAM role ARN that gives Kendra permissions.
+                  example: example-value
+                Description:
+                  type: string
+                  description: A description for the index.
+                Edition:
+                  type: string
+                  description: 'The edition: DEVELOPER_EDITION or ENTERPRISE_EDITION.'
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListIndexes
+      summary: Amazon Kendra List Indexes
+      description: Lists the Amazon Kendra indexes in the current account.
+      tags:
+      - Indexes
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}:
+    get:
+      operationId: DescribeIndex
+      summary: Amazon Kendra Describe Index
+      description: Gets information about an existing Amazon Kendra index.
+      tags:
+      - Indexes
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: UpdateIndex
+      summary: Amazon Kendra Update Index
+      description: Updates an existing Amazon Kendra index.
+      tags:
+      - Indexes
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: DeleteIndex
+      summary: Amazon Kendra Delete Index
+      description: Deletes an existing Amazon Kendra index.
+      tags:
+      - Indexes
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/data-sources:
+    post:
+      operationId: CreateDataSource
+      summary: Amazon Kendra Create Data Source
+      description: Creates a data source connector that connects to a data repository.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - Type
+              properties:
+                Name:
+                  type: string
+                  description: The name for the data source connector.
+                  example: example-value
+                Type:
+                  type: string
+                  description: 'The type of data source: S3, SHAREPOINT, SALESFORCE, etc.'
+                  example: example-value
+                Description:
+                  type: string
+                  description: A description for the data source.
+                Schedule:
+                  type: string
+                  description: Sets the frequency that Amazon Kendra checks the documents in your repository.
+                RoleArn:
+                  type: string
+                  description: The IAM role ARN for the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListDataSources
+      summary: Amazon Kendra List Data Sources
+      description: Lists the data source connectors for an index.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/data-sources/{DataSourceId}:
+    get:
+      operationId: DescribeDataSource
+      summary: Amazon Kendra Describe Data Source
+      description: Gets information about an Amazon Kendra data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    put:
+      operationId: UpdateDataSource
+      summary: Amazon Kendra Update Data Source
+      description: Updates an Amazon Kendra data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: DeleteDataSource
+      summary: Amazon Kendra Delete Data Source
+      description: Deletes an Amazon Kendra data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/data-sources/{DataSourceId}/sync-jobs:
+    post:
+      operationId: StartDataSourceSyncJob
+      summary: Amazon Kendra Start Data Source Sync Job
+      description: Starts a synchronization job for a data source connector.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListDataSourceSyncJobs
+      summary: Amazon Kendra List Data Source Sync Jobs
+      description: Gets statistics about synchronization of users and groups with your data source.
+      tags:
+      - Data Sources
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: DataSourceId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the data source.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/documents:
+    post:
+      operationId: BatchPutDocument
+      summary: Amazon Kendra Batch Put Document
+      description: Adds one or more documents to an Amazon Kendra index.
+      tags:
+      - Documents
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Documents
+              properties:
+                Documents:
+                  type: array
+                  description: One or more documents to add to the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: BatchDeleteDocument
+      summary: Amazon Kendra Batch Delete Document
+      description: Removes one or more documents from an Amazon Kendra index.
+      tags:
+      - Documents
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - DocumentIdList
+              properties:
+                DocumentIdList:
+                  type: array
+                  description: The list of document IDs to delete.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/documents/status:
+    post:
+      operationId: BatchGetDocumentStatus
+      summary: Amazon Kendra Batch Get Document Status
+      description: Returns the indexing status for one or more documents submitted with BatchPutDocument.
+      tags:
+      - Documents
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - DocumentInfoList
+              properties:
+                DocumentInfoList:
+                  type: array
+                  description: A list of DocumentInfo objects that identify the documents for which to get the status.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/query:
+    post:
+      operationId: Query
+      summary: Amazon Kendra Query
+      description: Searches an active index with a query and returns relevant documents and answers.
+      tags:
+      - Queries
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - QueryText
+              properties:
+                QueryText:
+                  type: string
+                  description: The input query text for the search.
+                  example: example-value
+                AttributeFilter:
+                  type: object
+                  description: Filters the search results based on document attributes.
+                PageNumber:
+                  type: integer
+                  description: Query results are paginated. The maximum number of results returned depends on the index.
+                PageSize:
+                  type: integer
+                  description: Sets the number of results that are returned for each page of results.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/retrieve:
+    post:
+      operationId: Retrieve
+      summary: Amazon Kendra Retrieve
+      description: Retrieves relevant passages or text excerpts given an input query for use in RAG applications.
+      tags:
+      - Queries
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - QueryText
+              properties:
+                QueryText:
+                  type: string
+                  description: The input query text to retrieve passages for.
+                  example: example-value
+                AttributeFilter:
+                  type: object
+                  description: Filters results based on document attributes.
+                PageNumber:
+                  type: integer
+                  description: The page number of results.
+                PageSize:
+                  type: integer
+                  description: The number of results to retrieve per page.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/experiences:
+    post:
+      operationId: CreateExperience
+      summary: Amazon Kendra Create Experience
+      description: Creates an Amazon Kendra experience such as a search application.
+      tags:
+      - Experience
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              properties:
+                Name:
+                  type: string
+                  description: A name for your Amazon Kendra experience.
+                  example: example-value
+                Description:
+                  type: string
+                  description: A description for your Amazon Kendra experience.
+                RoleArn:
+                  type: string
+                  description: The IAM role with permissions to run GetUserContext.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListExperiences
+      summary: Amazon Kendra List Experiences
+      description: Lists one or more Amazon Kendra experiences.
+      tags:
+      - Experience
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/query-suggestions:
+    post:
+      operationId: GetQuerySuggestions
+      summary: Amazon Kendra Get Query Suggestions
+      description: Fetches the queries that are suggested to your users based on their query history.
+      tags:
+      - Query Suggestions
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - QueryText
+              properties:
+                QueryText:
+                  type: string
+                  description: The text of a user's query to generate query suggestions.
+                  example: example-value
+                MaxSuggestionsCount:
+                  type: integer
+                  description: The maximum number of query suggestions returned.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/faqs:
+    post:
+      operationId: CreateFaq
+      summary: Amazon Kendra Create FAQ
+      description: Creates a set of frequently asked questions (FAQs) using a specified FAQ file stored in an Amazon S3 bucket.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - S3Path
+              - RoleArn
+              properties:
+                Name:
+                  type: string
+                  description: The name that should be associated with the FAQ.
+                  example: example-value
+                S3Path:
+                  type: object
+                  description: The S3 location of the FAQ input data.
+                RoleArn:
+                  type: string
+                  description: The Amazon Resource Name (ARN) of an IAM role.
+                  example: example-value
+                Description:
+                  type: string
+                  description: The description of the FAQ.
+                FileFormat:
+                  type: string
+                  description: The format of the input file. You can choose between a basic CSV format, a CSV format that includes customs attributes in a header, and a JSON format.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListFaqs
+      summary: Amazon Kendra List FAQs
+      description: Gets a list of FAQ lists associated with an index.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/faqs/{FaqId}:
+    get:
+      operationId: DescribeFaq
+      summary: Amazon Kendra Describe FAQ
+      description: Gets information about an FAQ list.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: FaqId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the FAQ.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    delete:
+      operationId: DeleteFaq
+      summary: Amazon Kendra Delete FAQ
+      description: Removes an FAQ from an index.
+      tags:
+      - FAQs
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      - name: FaqId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the FAQ.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+  /indexes/{IndexId}/thesaurus:
+    post:
+      operationId: CreateThesaurus
+      summary: Amazon Kendra Create Thesaurus
+      description: Creates a thesaurus for an index. The thesaurus contains a list of synonyms in Solr format.
+      tags:
+      - Thesaurus
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - Name
+              - RoleArn
+              - SourceS3Path
+              properties:
+                Name:
+                  type: string
+                  description: The name for the thesaurus.
+                  example: example-value
+                RoleArn:
+                  type: string
+                  description: An IAM role that gives Kendra permissions to access thesaurus file.
+                  example: example-value
+                SourceS3Path:
+                  type: object
+                  description: The S3 path where your thesaurus file sits in S3.
+                Description:
+                  type: string
+                  description: The description for the thesaurus.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+    get:
+      operationId: ListThesauri
+      summary: Amazon Kendra List Thesauri
+      description: Lists the thesauri for an index.
+      tags:
+      - Thesaurus
+      parameters:
+      - name: IndexId
+        in: path
+        required: true
+        schema:
+          type: string
+        description: The identifier of the index.
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Bad request - invalid input parameters
+        '403':
+          description: Access denied - insufficient permissions
+        '500':
+          description: Internal server error
+      x-microcks-operation:
+        delay: 0
+        dispatcher: FALLBACK
+components:
+  securitySchemes:
+    sigv4:
+      type: apiKey
+      name: Authorization
+      in: header
+      description: AWS Signature Version 4 authentication
+  schemas:
+    Index:
+      type: object
+      description: An Amazon Kendra search index.
+      properties:
+        Id:
+          type: string
+          description: The unique identifier of the index.
+          example: abc12345-6789-def0-1234-abcdef012345
+        Name:
+          type: string
+          description: The name of the index.
+          example: my-enterprise-index
+        Status:
+          type: string
+          enum:
+          - CREATING
+          - ACTIVE
+          - DELETING
+          - FAILED
+          - UPDATING
+          - SYSTEM_UPDATING
+          description: The current status of the index.
+          example: ACTIVE
+        Edition:
+          type: string
+          enum:
+          - DEVELOPER_EDITION
+          - ENTERPRISE_EDITION
+          - GEN_AI_ENTERPRISE_EDITION
+          description: The Amazon Kendra edition for the index.
+          example: ENTERPRISE_EDITION
+        RoleArn:
+          type: string
+          description: The IAM role ARN for the index.
+          example: arn:aws:iam::123456789012:role/KendraRole
+        CreatedAt:
+          type: string
+          format: date-time
+          description: The Unix datetime that the index was created.
+        UpdatedAt:
+          type: string
+          format: date-time
+          description: The Unix datetime that the index was last updated.
+    DataSource:
+      type: object
+      description: A data source connector for an Amazon Kendra index.
+      properties:
+        Id:
+          type: string
+          description: The identifier of the data source.
+          example: ds-abc12345
+        Name:
+          type: string
+          description: The name of the data source.
+          example: sharepoint-connector
+        Type:
+          type: string
+          enum:
+          - S3
+          - SHAREPOINT
+          - DATABASE
+          - SALESFORCE
+          - ONEDRIVE
+          - SERVICENOW
+          - CUSTOM
+          - CONFLUENCE
+          - GOOGLEDRIVE
+          - WEBCRAWLER
+          - WORKDOCS
+          description: The type of the data source.
+          example: S3
+        Status:
+          type: string
+          enum:
+          - CREATING
+          - DELETING
+          - FAILED
+          - UPDATING
+          - ACTIVE
+          description: The status of the data source.
+          example: ACTIVE
+        Schedule:
+          type: string
+          description: The cron schedule for automatic synchronization.
+          example: cron(0 11 * * ? *)
+    QueryResult:
+      type: object
+      description: Amazon Kendra query result containing ranked document passages and answers.
+      properties:
+        QueryId:
+          type: string
+          description: The unique identifier for the search query.
+          example: q-abc12345
+        ResultItems:
+          type: array
+          description: The results of the search query.
+          items:
+            $ref: '#/components/schemas/QueryResultItem'
+        TotalNumberOfResults:
+          type: integer
+          description: The total number of items found.
+          example: 42
+    QueryResultItem:
+      type: object
+      description: A single result returned from a query.
+      properties:
+        Id:
+          type: string
+          description: The unique identifier for the result.
+          example: res-abc12345
+        Type:
+          type: string
+          enum:
+          - DOCUMENT
+          - QUESTION_ANSWER
+          - ANSWER
+          description: The type of result.
+          example: DOCUMENT
+        DocumentId:
+          type: string
+          description: The unique identifier for the document.
+          example: doc-abc12345
+        DocumentTitle:
+          type: object
+          description: The title of the document.
+        DocumentExcerpt:
+          type: object
+          description: An extract of the document text.
+        ScoreAttributes:
+          type: object
+          description: The confidence score of the result.

@@ -1,0 +1,28 @@
+{
+  "provider": "amazon-kendra",
+  "sources": [
+    "amazon-kendra-data-sources-api-openapi.yml",
+    "amazon-kendra-documents-api-openapi.yml",
+    "amazon-kendra-experience-api-openapi.yml",
+    "amazon-kendra-faqs-api-openapi.yml",
+    "amazon-kendra-indexes-api-openapi.yml",
+    "amazon-kendra-queries-api-openapi.yml",
+    "amazon-kendra-query-suggestions-api-openapi.yml",
+    "amazon-kendra-thesaurus-api-openapi.yml"
+  ],
+  "outputs": [
+    "amazon-kendra-data-sources-api-openapi.yml",
+    "amazon-kendra-documents-api-openapi.yml",
+    "amazon-kendra-experience-api-openapi.yml",
+    "amazon-kendra-faqs-api-openapi.yml",
+    "amazon-kendra-indexes-api-openapi.yml",
+    "amazon-kendra-queries-api-openapi.yml",
+    "amazon-kendra-query-suggestions-api-openapi.yml",
+    "amazon-kendra-thesaurus-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
