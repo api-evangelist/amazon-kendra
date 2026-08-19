@@ -1,0 +1,118 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Kendra Data Sources FAQs API",
+    "version": "2019-02-03"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "FAQs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List FAQs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Gets a list of FAQ lists associated with an index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create FAQ",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a set of frequently asked questions (FAQs) using a specified FAQ file stored in an Amazon S3 bucket."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Describe FAQ",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs/:FaqId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "FaqId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the FAQ."
+              }
+            ]
+          },
+          "docs": "Gets information about an FAQ list."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Delete FAQ",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/faqs/:FaqId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "FaqId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the FAQ."
+              }
+            ]
+          },
+          "docs": "Removes an FAQ from an index."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

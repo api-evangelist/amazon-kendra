@@ -1,0 +1,72 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Kendra Data Sources Queries API",
+    "version": "2019-02-03"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Queries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra Query",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/query",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Searches an active index with a query and returns relevant documents and answers."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Retrieve",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/retrieve",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieves relevant passages or text excerpts given an input query for use in RAG applications."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

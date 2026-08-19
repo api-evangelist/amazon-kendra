@@ -1,0 +1,109 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Kendra Data Sources Indexes API",
+    "version": "2019-02-03"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Indexes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Indexes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes"
+          },
+          "docs": "Lists the Amazon Kendra indexes in the current account."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Amazon Kendra index for enterprise search."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Describe Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Gets information about an existing Amazon Kendra index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Update Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Updates an existing Amazon Kendra index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Delete Index",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Deletes an existing Amazon Kendra index."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

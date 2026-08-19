@@ -1,0 +1,193 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Kendra Data Sources API",
+    "version": "2019-02-03"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Data Sources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Data Sources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Lists the data source connectors for an index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a data source connector that connects to a data repository."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Describe Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Gets information about an Amazon Kendra data source connector."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Update Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Updates an Amazon Kendra data source connector."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Delete Data Source",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Deletes an Amazon Kendra data source connector."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra List Data Source Sync Jobs",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId/sync-jobs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Gets statistics about synchronization of users and groups with your data source."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Start Data Source Sync Job",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/data-sources/:DataSourceId/sync-jobs",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              },
+              {
+                "name": "DataSourceId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the data source."
+              }
+            ]
+          },
+          "docs": "Starts a synchronization job for a data source connector."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

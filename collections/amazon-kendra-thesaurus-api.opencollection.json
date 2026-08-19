@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Amazon Kendra Data Sources Thesaurus API",
+    "version": "2019-02-03"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "Authorization",
+      "value": "{{Authorization}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Thesaurus",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Amazon Kendra List Thesauri",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/thesaurus",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ]
+          },
+          "docs": "Lists the thesauri for an index."
+        },
+        {
+          "info": {
+            "name": "Amazon Kendra Create Thesaurus",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kendra.{region}.amazonaws.com/indexes/:IndexId/thesaurus",
+            "params": [
+              {
+                "name": "IndexId",
+                "value": "",
+                "type": "path",
+                "description": "The identifier of the index."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a thesaurus for an index. The thesaurus contains a list of synonyms in Solr format."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
