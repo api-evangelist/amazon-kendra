@@ -24,6 +24,13 @@ accessModel:
   method: derived
 image: https://a0.awsstatic.com/libra-css/images/logos/aws_logo_smile_1200x630.png
 tags:
+  - Artificial Intelligence
+  - AWS
+  - Enterprise Search
+  - Knowledge-Management
+  - Machine-Learning
+  - Natural-Language
+tags_raw:
   - AI
   - AWS
   - Enterprise Search
@@ -199,6 +206,8 @@ apis:
   humanURL: https://aws.amazon.com/kendra/
   baseURL: https://kendra.amazonaws.com
   tags:
+  - Query
+  tags_raw:
   - Queries
   properties:
   - type: OpenAPI
@@ -263,6 +272,8 @@ apis:
   humanURL: https://aws.amazon.com/kendra/
   baseURL: https://kendra.amazonaws.com
   tags:
+  - thesaurus
+  tags_raw:
   - Thesaurus
   properties:
   - type: OpenAPI
