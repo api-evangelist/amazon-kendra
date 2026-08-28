@@ -13,8 +13,11 @@ info:
     can be read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: queriesApi
+  url: ../openapi/amazon-kendra-queries-api-openapi.yml
+  type: openapi
+- name: thesaurusApi
+  url: ../openapi/amazon-kendra-thesaurus-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-thesaurus-and-query

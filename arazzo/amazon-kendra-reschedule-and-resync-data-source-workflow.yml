@@ -12,8 +12,8 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: dataSourcesApi
+  url: ../openapi/amazon-kendra-data-sources-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: reschedule-and-resync-data-source

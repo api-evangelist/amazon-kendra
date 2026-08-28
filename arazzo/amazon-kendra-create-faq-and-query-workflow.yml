@@ -11,8 +11,11 @@ info:
     and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: faqsApi
+  url: ../openapi/amazon-kendra-faqs-api-openapi.yml
+  type: openapi
+- name: queriesApi
+  url: ../openapi/amazon-kendra-queries-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-faq-and-query

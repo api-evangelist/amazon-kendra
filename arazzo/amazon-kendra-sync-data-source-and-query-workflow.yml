@@ -11,8 +11,11 @@ info:
     without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: dataSourcesApi
+  url: ../openapi/amazon-kendra-data-sources-api-openapi.yml
+  type: openapi
+- name: queriesApi
+  url: ../openapi/amazon-kendra-queries-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: sync-data-source-and-query

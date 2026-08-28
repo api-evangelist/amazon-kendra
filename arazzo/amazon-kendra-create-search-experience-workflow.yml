@@ -12,8 +12,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: experienceApi
+  url: ../openapi/amazon-kendra-experience-api-openapi.yml
+  type: openapi
+- name: indexesApi
+  url: ../openapi/amazon-kendra-indexes-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: create-search-experience

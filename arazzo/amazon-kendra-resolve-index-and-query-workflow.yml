@@ -12,8 +12,11 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: indexesApi
+  url: ../openapi/amazon-kendra-indexes-api-openapi.yml
+  type: openapi
+- name: queriesApi
+  url: ../openapi/amazon-kendra-queries-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: resolve-index-and-query

@@ -11,8 +11,11 @@ info:
     be read and executed without opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: dataSourcesApi
+  url: ../openapi/amazon-kendra-data-sources-api-openapi.yml
+  type: openapi
+- name: indexesApi
+  url: ../openapi/amazon-kendra-indexes-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: teardown-data-source-and-index

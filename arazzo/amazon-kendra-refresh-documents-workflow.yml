@@ -12,8 +12,8 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: kendraApi
-  url: ../openapi/amazon-kendra-openapi.yml
+- name: documentsApi
+  url: ../openapi/amazon-kendra-documents-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: refresh-documents
