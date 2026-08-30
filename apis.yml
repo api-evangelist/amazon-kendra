@@ -41,7 +41,7 @@ tags:
   - Enterprise Search
   - Knowledge-Management
   - Machine-Learning
-  - Natural-Language
+  - Natural Language
 tags_raw:
   - AI
   - AWS
@@ -284,7 +284,7 @@ apis:
   humanURL: https://aws.amazon.com/kendra/
   baseURL: https://kendra.amazonaws.com
   tags:
-  - thesaurus
+  - Thesaurus
   tags_raw:
   - Thesaurus
   properties:
