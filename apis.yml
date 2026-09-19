@@ -154,6 +154,8 @@ apis:
   humanURL: https://aws.amazon.com/kendra/
   baseURL: https://kendra.amazonaws.com
   tags:
+  - Index
+  tags_raw:
   - Indexes
   properties:
   - type: OpenAPI
