@@ -1,14 +1,7 @@
 {
   "provider": "amazon-kendra",
   "sources": [
-    "amazon-kendra-data-sources-api-openapi.yml",
-    "amazon-kendra-documents-api-openapi.yml",
-    "amazon-kendra-experience-api-openapi.yml",
-    "amazon-kendra-faqs-api-openapi.yml",
-    "amazon-kendra-indexes-api-openapi.yml",
-    "amazon-kendra-queries-api-openapi.yml",
-    "amazon-kendra-query-suggestions-api-openapi.yml",
-    "amazon-kendra-thesaurus-api-openapi.yml"
+    "_original/amazon-kendra-openapi.yml"
   ],
   "outputs": [
     "amazon-kendra-data-sources-api-openapi.yml",
@@ -20,11 +13,25 @@
     "amazon-kendra-query-suggestions-api-openapi.yml",
     "amazon-kendra-thesaurus-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 1 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
   "notes": [
-    "apis.yml register: already-registered"
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "amazon-kendra-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "superseded outputs removed: amazon-kendra-fa-qs-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 8 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "amazon-kendra-data-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-documents-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-experience-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-fa-qs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-indexes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-queries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-query-suggestions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "amazon-kendra-thesaurus-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
