@@ -39,9 +39,10 @@ tags:
 - Artificial Intelligence
 - AWS
 - Enterprise Search
-- Knowledge-Management
-- Machine-Learning
+- Knowledge Management
+- Machine Learning
 - Natural-Language
+- Search
 tags_raw:
 - AI
 - AWS
@@ -49,6 +50,9 @@ tags_raw:
 - Knowledge Management
 - Machine Learning
 - Natural Language
+- Knowledge-Management
+- Machine-Learning
+- Search
 created: '2024-01-15'
 modified: '2026-09-16'
 apis:
@@ -316,7 +320,7 @@ apis:
     url: json-schema/amazon-kendra-faq-schema.json
 common:
 - type: Website
-  url: https://amazon.com
+  url: https://aws.amazon.com/kendra/
 - type: AgenticAccess
   url: agentic-access/amazon-kendra-agentic-access.yml
 - type: TrustCenter
@@ -480,5 +484,5 @@ maintainers:
   email: kin@apievangelist.com
   url: https://apievangelist.com
 include: []
-x-parent: aws
+x-parent: amazon-web-services
 x-relationship: product
