@@ -319,6 +319,8 @@ apis:
   - type: JSONSchema
     url: json-schema/amazon-kendra-faq-schema.json
 common:
+- type: Plans
+  url: plans/amazon-kendra-plans-pricing.yml
 - type: Website
   url: https://aws.amazon.com/kendra/
 - type: AgenticAccess
