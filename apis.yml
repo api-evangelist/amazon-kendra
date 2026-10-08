@@ -319,6 +319,10 @@ apis:
   - type: JSONSchema
     url: json-schema/amazon-kendra-faq-schema.json
 common:
+- type: RateLimits
+  url: rate-limits/amazon-kendra-rate-limits.yml
+- type: FinOps
+  url: finops/amazon-kendra-finops.yml
 - type: Plans
   url: plans/amazon-kendra-plans-pricing.yml
 - type: Website
