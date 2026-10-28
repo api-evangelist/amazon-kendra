@@ -1,4 +1,4 @@
-# Amazon Kendra (amazon-kendra)
+# Amazon Kendra
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,88 +66,211 @@
 
 Amazon Kendra is an intelligent enterprise search service powered by machine learning that enables organizations to index and search across multiple data sources, delivering highly accurate and relevant answers to natural language queries.
 
-**APIs.json:** [https://aws.amazon.com/kendra/](https://aws.amazon.com/kendra/)
+**Areas:** Artificial Intelligence · AWS · Enterprise Search · Knowledge Management · Machine Learning · Natural-Language · Search
 
-## Scope
+## Amazon Kendra on APIs.io
 
-- **Type:** Index
+Everything profiled for Amazon Kendra is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/amazon-kendra/](https://apis.io/providers/amazon-kendra/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (14)
 
-- AI
-- AWS
-- Enterprise Search
-- Knowledge Management
-- Machine Learning
-- Natural Language
+- [Amazon Kendra Data Sources API](https://apis.io/apis/amazon-kendra/amazon-kendra-data-sources-api/) — Operations for managing data source connectors
+- [Amazon Kendra Documents API](https://apis.io/apis/amazon-kendra/amazon-kendra-documents-api/) — Operations for managing documents in the index
+- [Amazon Kendra Experience API](https://apis.io/apis/amazon-kendra/amazon-kendra-experience-api/) — Operations for managing search experiences
+- [Amazon Kendra Indexes API](https://apis.io/apis/amazon-kendra/amazon-kendra-indexes-api/) — Operations for creating and managing search indexes
+- [Amazon Kendra Queries API](https://apis.io/apis/amazon-kendra/amazon-kendra-queries-api/) — Operations for querying the search index
+- [Amazon Kendra Query Suggestions API](https://apis.io/apis/amazon-kendra/amazon-kendra-query-suggestions-api/) — Operations for query autocompletion
+- [Amazon Kendra Thesaurus API](https://apis.io/apis/amazon-kendra/amazon-kendra-thesaurus-api/) — Operations for managing custom synonyms
+- [Amazon Kendra FA Qs API](https://apis.io/apis/amazon-kendra/amazon-kendra-faqs-api/) — Operations for managing FAQ entries
+- [Amazon Kendra Kendra Access Control Configuration API](https://apis.io/apis/amazon-kendra/amazon-kendra-access-control-configuration-api/) — The Kendra Access Control Configuration API from Amazon Kendra — 5 operation(s) for kendra access control configuration.
+- [Amazon Kendra Kendra Data Source Sync Job API](https://apis.io/apis/amazon-kendra/amazon-kendra-data-source-sync-job-api/) — The Kendra Data Source Sync Job API from Amazon Kendra — 3 operation(s) for kendra data source sync job.
+- [Amazon Kendra Kendra Featured Results Set API](https://apis.io/apis/amazon-kendra/amazon-kendra-featured-results-set-api/) — The Kendra Featured Results Set API from Amazon Kendra — 5 operation(s) for kendra featured results set.
+- [Amazon Kendra Kendra Operations API](https://apis.io/apis/amazon-kendra/amazon-kendra-operations-api/) — The Kendra Operations API from Amazon Kendra — 18 operation(s) for kendra operations.
+- [Amazon Kendra Kendra Principal Mapping API](https://apis.io/apis/amazon-kendra/amazon-kendra-principal-mapping-api/) — The Kendra Principal Mapping API from Amazon Kendra — 3 operation(s) for kendra principal mapping.
+- [Amazon Kendra Kendra Query Suggestions Block List API](https://apis.io/apis/amazon-kendra/amazon-kendra-query-suggestions-block-list-api/) — The Kendra Query Suggestions Block List API from Amazon Kendra — 5 operation(s) for kendra query suggestions block list.
 
-## Timestamps
+### Published properties
 
-- **Created:** 2024-01-15
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### Arazzo workflows (12)
 
-### Amazon Kendra API
+Multi-step workflows that chain operations into a business task.
 
-The Amazon Kendra API provides programmatic access to create and manage intelligent search indexes, configure data source connectors, submit queries, and manage relevance tuning for ML-powered enterprise search.
+- [Amazon Kendra Create FAQ and Query](https://apis.io/arazzos/amazon-kendra/amazon-kendra-create-faq-and-query-workflow/)
+- [Amazon Kendra Create Search Experience](https://apis.io/arazzos/amazon-kendra/amazon-kendra-create-search-experience-workflow/)
+- [Amazon Kendra Create Thesaurus and Query](https://apis.io/arazzos/amazon-kendra/amazon-kendra-create-thesaurus-and-query-workflow/)
+- [Amazon Kendra Ingest Documents and Query](https://apis.io/arazzos/amazon-kendra/amazon-kendra-ingest-documents-and-query-workflow/)
+- [Amazon Kendra Provision Index and Start First Sync](https://apis.io/arazzos/amazon-kendra/amazon-kendra-provision-index-and-sync-workflow/)
+- [Amazon Kendra Query Suggestions then Search](https://apis.io/arazzos/amazon-kendra/amazon-kendra-query-suggestions-then-search-workflow/)
+- [Amazon Kendra Refresh Documents](https://apis.io/arazzos/amazon-kendra/amazon-kendra-refresh-documents-workflow/)
+- [Amazon Kendra Reschedule and Resync Data Source](https://apis.io/arazzos/amazon-kendra/amazon-kendra-reschedule-and-resync-data-source-workflow/)
+- [Amazon Kendra Resolve Index by Name and Query](https://apis.io/arazzos/amazon-kendra/amazon-kendra-resolve-index-and-query-workflow/)
+- [Amazon Kendra Retrieve Passages for RAG](https://apis.io/arazzos/amazon-kendra/amazon-kendra-retrieve-passages-for-rag-workflow/)
+- [Amazon Kendra Sync Data Source and Query](https://apis.io/arazzos/amazon-kendra/amazon-kendra-sync-data-source-and-query-workflow/)
+- [Amazon Kendra Teardown Data Source and Index](https://apis.io/arazzos/amazon-kendra/amazon-kendra-teardown-data-source-and-index-workflow/)
 
-- **Human URL:** [https://aws.amazon.com/kendra/](https://aws.amazon.com/kendra/)
-- **Base URL:** `https://kendra.amazonaws.com`
+#### Agentic access (1)
 
-#### Tags
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- Enterprise Search
-- ML Search
-- Natural Language Processing
+- [Amazon Kendra Agentic Access](https://apis.io/agentic-access/amazon-kendra/amazon-kendra-agentic-access/)
 
-#### Properties
+#### JSON Schema (4)
 
-- [Documentation](https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html)
-- [OpenAPI](https://api.apis.guru/v2/specs/amazonaws.com/kendra/2019-02-03/openapi.yaml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Pricing](https://aws.amazon.com/kendra/pricing/)
-- [Getting Started](https://aws.amazon.com/kendra/getting-started/)
-- [F A Q](https://aws.amazon.com/kendra/faqs/)
-- [Features](https://aws.amazon.com/kendra/features/)
-- [Documentation](https://docs.aws.amazon.com/kendra/latest/dg/what-is-kendra.html)
-- [API Reference](https://docs.aws.amazon.com/kendra/latest/APIReference/Welcome.html)
-- [OpenAPI](openapi/amazon-kendra-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/amazon-kendra.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/amazon-kendra.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON-LD](json-ld/amazon-kendra-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
-- [JSON Schema](json-schema/amazon-kendra-index-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/amazon-kendra-data-source-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/amazon-kendra-query-result-schema.json) — [JSON Schema](https://json-schema.org/specification)
-- [JSON Schema](json-schema/amazon-kendra-faq-schema.json) — [JSON Schema](https://json-schema.org/specification)
+The data models the API reads and writes.
 
-## Common Properties
+- [DataSource](https://apis.io/schemas/amazon-kendra/amazon-kendra-data-source/)
+- [Faq](https://apis.io/schemas/amazon-kendra/amazon-kendra-faq/)
+- [Index](https://apis.io/schemas/amazon-kendra/amazon-kendra-index/)
+- [QueryResult](https://apis.io/schemas/amazon-kendra/amazon-kendra-query-result/)
 
-- [Arazzo Workflows](arazzo/) — [Arazzo Specification](https://spec.openapis.org/arazzo/latest.html)
-- [Blog](https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/amazon-kendra/)
-- [Support](https://aws.amazon.com/premiumsupport/)
-- [Console](https://console.aws.amazon.com/kendra/home)
-- [C L I](https://docs.aws.amazon.com/cli/latest/reference/kendra/)
-- [SDK](https://aws.amazon.com/tools/)
-- [Status Page](https://status.aws.amazon.com/)
-- [Compliance](https://aws.amazon.com/compliance/)
-- [Terms of Service](https://aws.amazon.com/service-terms/)
-- [Portal](https://aws.amazon.com/kendra/)
+#### JSON Structure (4)
+
+Data models expressed in JSON Structure.
+
+- [Amazon Kendra Data Source Structure](https://apis.io/json-structure/amazon-kendra/amazon-kendra-data-source-structure/)
+- [Amazon Kendra Faq Structure](https://apis.io/json-structure/amazon-kendra/amazon-kendra-faq-structure/)
+- [Amazon Kendra Index Structure](https://apis.io/json-structure/amazon-kendra/amazon-kendra-index-structure/)
+- [Amazon Kendra Query Result Structure](https://apis.io/json-structure/amazon-kendra/amazon-kendra-query-result-structure/)
+
+#### JSON-LD (1)
+
+Linked-data contexts for the provider's vocabulary.
+
+- [Amazon Kendra Context](https://apis.io/jsonld/amazon-kendra/amazon-kendra-context/)
+
+#### Vocabulary (1)
+
+The provider's domain terms, defined.
+
+- [Amazon Kendra Vocabulary](https://apis.io/vocabularies/amazon-kendra/amazon-kendra-vocabulary/)
+
+#### Examples (4)
+
+Example requests and responses.
+
+- [Amazon Kendra Data Source Example](https://apis.io/examples/amazon-kendra/amazon-kendra-data-source-example/)
+- [Amazon Kendra Faq Example](https://apis.io/examples/amazon-kendra/amazon-kendra-faq-example/)
+- [Amazon Kendra Index Example](https://apis.io/examples/amazon-kendra/amazon-kendra-index-example/)
+- [Amazon Kendra Query Result Example](https://apis.io/examples/amazon-kendra/amazon-kendra-query-result-example/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Amazon Kendra API](https://apis.io/collections/amazon-kendra/open-amazon-kendra/)
+- [Amazon Kendra Data Sources API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-data-sources-api/)
+- [Amazon Kendra Data Sources Documents API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-documents-api/)
+- [Amazon Kendra Data Sources Experience API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-experience-api/)
+- [Amazon Kendra Data Sources FAQs API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-faqs-api/)
+- [Amazon Kendra Data Sources Indexes API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-indexes-api/)
+- [Amazon Kendra Data Sources Queries API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-queries-api/)
+- [Amazon Kendra Data Sources Query Suggestions API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-query-suggestions-api/)
+- [Amazon Kendra Data Sources Thesaurus API](https://apis.io/collections/amazon-kendra/open-amazon-kendra-thesaurus-api/)
+- [Amazon Kendra API](https://apis.io/collections/amazon-kendra/postman-amazon-kendra/)
+
+#### Governance rules (2)
+
+Spectral rulesets for the provider's contracts.
+
+- [Amazon Kendra — jsonschema rules](https://apis.io/rules/amazon-kendra/amazon-kendra-jsonschema-spectral-rules/)
+- [Amazon Kendra API Rules](https://apis.io/rules/amazon-kendra/amazon-kendra-spectral-rules/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Amazon Kendra Authentication](https://apis.io/security/amazon-kendra/amazon-kendra-authentication/)
+- [Amazon Kendra Domain Security](https://apis.io/security/amazon-kendra/amazon-kendra-domain-security/)
+- [Amazon Kendra Trust Center](https://apis.io/security/amazon-kendra/amazon-kendra-trust-center/)
+- [Amazon Kendra Vulnerability Disclosure](https://apis.io/security/amazon-kendra/amazon-kendra-vulnerability-disclosure/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Amazon Kendra Plans Pricing](https://apis.io/plans/amazon-kendra/amazon-kendra-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Amazon Kendra Rate Limits](https://apis.io/rate-limits/amazon-kendra/amazon-kendra-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Amazon Kendra Finops](https://apis.io/finops/amazon-kendra/amazon-kendra-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://aws.amazon.com/kendra/)
 - [Documentation](https://docs.aws.amazon.com/kendra/)
+- [Getting started](https://aws.amazon.com/kendra/getting-started/)
 - [Pricing](https://aws.amazon.com/kendra/pricing/)
-- [Getting Started](https://aws.amazon.com/kendra/getting-started/)
-- [F A Q](https://aws.amazon.com/kendra/faqs/)
-- [Privacy Policy](https://aws.amazon.com/privacy/)
-- [Sign Up](https://portal.aws.amazon.com/billing/signup)
-- [GitHub Organization](https://github.com/aws)
-- [Features](undefined)
-- [Use Cases](undefined)
-- [Integrations](undefined)
-- [Spectral Rules](rules/amazon-kendra-spectral-rules.yml)
-- [Vocabulary](vocabulary/amazon-kendra-vocabulary.yaml)
-- [Integrations](https://aws.amazon.com/marketplace)
+- [Support](https://aws.amazon.com/premiumsupport/)
+- [Blog](https://aws.amazon.com/blogs/machine-learning/category/artificial-intelligence/amazon-kendra/)
+- [Compliance](https://aws.amazon.com/compliance/)
+- [Terms of service](https://aws.amazon.com/service-terms/)
+- [Privacy policy](https://aws.amazon.com/privacy/)
+- [GitHub](https://github.com/aws)
+- [Status](https://status.aws.amazon.com/)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
-**URL:** https://apievangelist.com
+**Kin Score 66.2** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 67.5 |
+| Contract governance | 27.3 |
+| Operational transparency | 36.8 |
+| Developer ergonomics | 67.9 |
+| Access clarity | 92.1 |
+
+**Agent readiness 22.1** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 32.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/amazon-kendra/](https://apis.io/providers/amazon-kendra/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Amazon Kendra: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/amazon-kendra/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
