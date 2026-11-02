@@ -1,0 +1,188 @@
+# Pricing transcribed from the provider's own page — see provenance. Numbers are quoted, not derived.
+generated: '2026-10-07'
+method: searched
+source: https://aws.amazon.com/kendra/pricing/
+sources:
+- https://aws.amazon.com/kendra/pricing/
+provenance:
+  tool: all/0-working/economics/harvest_pricing.py
+  run: 20261007T104522
+  grounding: every price_text was found verbatim in the fetched page text
+audience: developer-api
+pricing_basis: usage-other
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+  managed_tier: GenAI Enterprise Edition
+published: true
+note: AWS Kendra pricing page; charges by index/storage/query unit-hours plus connector fees. Discounted
+  pricing for high volume requires a price quote.
+plan_count: 10
+currency: USD
+plans:
+- name: GenAI Enterprise Edition - Base Index (1 Storage Unit + 1 Query unit)
+  price_text: $0.32 per hour
+  price: 0.32
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: Up to 20,000 documents or 200MB of extracted text, whichever comes first - 0.1 QPS (approx
+    8000 queries per day)
+- name: Basic Enterprise Edition - Base Index
+  price_text: $1.4 per hour
+  price: 1.4
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: Up to 100,000 documents or 30GB of extracted text, whichever comes first - 0.1 QPS (approx
+    8000 queries per day)
+- name: Basic Developer Edition - Base Index
+  price_text: $1.125 per hour
+  price: 1.125
+  currency: USD
+  period: per-use
+  unit: hour
+  included_quota: Up to 10,000 documents or 3GB of extracted text, whichever comes first - 0.05 QPS (approx
+    4000 queroes per day)
+- name: GenAI Enterprise Edition - Storage Units
+  price_text: $0.25 per hour
+  price: 0.25
+  currency: USD
+  period: per-use
+  unit: hour per storage unit
+  included_quota: up to 20,000 documents or 200MB of extracted text whichever comes first
+- name: Basic Enterprise Edition - Storage Units
+  price_text: $0.7 per hour
+  price: 0.7
+  currency: USD
+  period: per-use
+  unit: hour per storage unit
+  included_quota: up to 100,000 documents or 30GB of extracted text whichever comes first
+- name: GenAI Enterprise Edition - Query Units
+  price_text: $0.07 per hour
+  price: 0.07
+  currency: USD
+  period: per-use
+  unit: hour per query unit
+  included_quota: 0.1 QPS (approx 8000 queries per day)
+- name: GenAI Enterprise Edition - Connectors
+  price_text: Flat price of $30 per index per month
+  price: 30
+  currency: USD
+  period: month
+  unit: index
+  included_quota: up to 500 hours of sync usage per month
+  overage: For higher usage, you can request a limit increase though service quotas
+- name: Basic Editions - Connectors (sync time)
+  price_text: $0.35 per hours when syncing
+  price: 0.35
+  currency: USD
+  period: per-use
+  unit: hour syncing
+- name: Basic Editions - Connectors (documents scanned)
+  price_text: $1 per 1M documents scanned while syncing
+  price: 1
+  currency: USD
+  period: per-use
+  unit: 1M documents scanned
+- name: Free Trial
+  price_text: free usage of up to 750 hours for the first 30 days
+  price: 750
+  period: one-time
+  unit: hours
+  included_quota: Basic Developer Edition or GenAI Enterprise Edition; connector usage does not qualify
+  overage: If you exceed the free tier usage limits, you will be charged the rates shown in the table
+    above
+rate_limit_statements:
+- 0.1 QPS (approx 8000 queries per day)
+- 0.05 QPS (approx 4000 queroes per day)
+x-canonical:
+  generated: '2026-11-01'
+  vocabulary: engine/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - subscription
+  units:
+  - compute
+  plans:
+  - name: GenAI Enterprise Edition - Base Index (1 Storage Unit + 1 Query unit)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Basic Enterprise Edition - Base Index
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Basic Developer Edition - Base Index
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GenAI Enterprise Edition - Storage Units
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Basic Enterprise Edition - Storage Units
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GenAI Enterprise Edition - Query Units
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: GenAI Enterprise Edition - Connectors
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - other
+    periods:
+    - month
+  - name: Basic Editions - Connectors (sync time)
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - other
+  - name: Basic Editions - Connectors (documents scanned)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods:
+    - other
+  - name: Free Trial
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods:
+    - one-time
