@@ -5,6 +5,9 @@ artifacts:
   agentic-access/amazon-kendra-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/amazon-kendra-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   arazzo/amazon-kendra-create-faq-and-query-workflow.yml:
     method: derived
     evidence: Arazzo whose sourceDescriptions are our split specs (../openapi/)
@@ -47,6 +50,15 @@ artifacts:
   capabilities/amazon-kendra-capability-edges.yml:
     method: unknown
     evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
+  changelog/amazon-kendra-changelog.yml:
+    method: searched
+    evidence: declared in the artifact
+  cli/amazon-kendra-cli.yml:
+    method: searched
+    evidence: declared in the artifact
   collections/amazon-kendra-data-sources-api.opencollection.json:
     method: derived
     evidence: openapi/amazon-kendra-data-sources-api
@@ -101,6 +113,24 @@ artifacts:
   collections/amazon-kendra.postman_collection.json:
     method: derived
     evidence: openapi/amazon-kendra
+  compliance/amazon-kendra-compliance.yml:
+    method: harvested
+    evidence: declared in the artifact
+  conformance/amazon-kendra-conformance.yml:
+    method: derived
+    evidence: declared in the artifact
+  conventions/amazon-kendra-conventions.yml:
+    method: derived
+    evidence: declared in the artifact
+  data-model/amazon-kendra-data-model.yml:
+    method: derived
+    evidence: declared in the artifact
+  eligibility/amazon-kendra-eligibility.yml:
+    method: harvested
+    evidence: declared in the artifact
+  errors/amazon-kendra-problem-types.yml:
+    method: searched
+    evidence: declared in the artifact
   examples/amazon-kendra-data-source-example.json:
     method: unknown
     evidence: no authorship recorded
@@ -119,6 +149,9 @@ artifacts:
   front-door-ai/2026-09-17.yml:
     method: unknown
     evidence: no authorship recorded
+  hosts/amazon-kendra-hosts.yml:
+    method: derived
+    evidence: declared in the artifact
   integrations/_index.yml:
     method: generated
     evidence: carries an API Evangelist house phrase
@@ -128,16 +161,130 @@ artifacts:
   json-ld/amazon-kendra-context.jsonld:
     method: unknown
     evidence: no authorship recorded
+  json-schema/amazon-kendra-batch-delete-featured-results-set-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-create-access-control-configuration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-create-featured-results-set-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-create-query-suggestions-block-list-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-create-rescore-execution-plan-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-create-rescore-execution-plan-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/amazon-kendra-data-source-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-delete-principal-mapping-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-access-control-configuration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-access-control-configuration-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-featured-results-set-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-principal-mapping-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-principal-mapping-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-query-suggestions-block-list-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-query-suggestions-block-list-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-query-suggestions-config-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-describe-rescore-execution-plan-response-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-schema/amazon-kendra-faq-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/amazon-kendra-get-snapshots-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/amazon-kendra-index-schema.json:
     method: unknown
     evidence: no authorship recorded
+  json-schema/amazon-kendra-list-access-control-configurations-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-access-control-configurations-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-data-source-sync-jobs-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-data-source-sync-jobs-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-featured-results-sets-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-featured-results-sets-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-query-suggestions-block-lists-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-query-suggestions-block-lists-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-rescore-execution-plans-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-list-rescore-execution-plans-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-put-principal-mapping-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-query-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
   json-schema/amazon-kendra-query-result-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-retrieve-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-start-data-source-sync-job-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-start-data-source-sync-job-response-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-stop-data-source-sync-job-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-update-access-control-configuration-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-update-featured-results-set-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-update-query-suggestions-block-list-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-update-query-suggestions-config-request-schema.json:
+    method: unknown
+    evidence: no authorship recorded
+  json-schema/amazon-kendra-update-rescore-execution-plan-request-schema.json:
     method: unknown
     evidence: no authorship recorded
   json-structure/amazon-kendra-data-source-structure.json:
@@ -155,7 +302,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -224,10 +371,24 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  openapi/_original/amazon-kendra-openapi.yml:
-    method: harvested
-    evidence: found in openapi/_original/; the fetch URL and bytes were not recorded, so byte-identity
-      to the provider's source is unverified
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
+  lifecycle/amazon-kendra-lifecycle.yml:
+    method: searched
+    evidence: declared in the artifact
+  llms/amazon-kendra-llms-provenance.yml:
+    method: unknown
+    evidence: no authorship recorded
+  llms/amazon-kendra-llms.txt:
+    method: unknown
+    evidence: no authorship recorded
+  mcp/amazon-kendra-mcp.yml:
+    method: searched
+    evidence: declared in the artifact
+  mcp/amazon-kendra-tool-crosswalk.yml:
+    method: derived
+    evidence: declared in the artifact
   openapi/amazon-kendra-access-control-configuration-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
@@ -259,27 +420,42 @@ artifacts:
     method: unknown
     evidence: no authorship recorded
   openapi/amazon-kendra-queries-api-openapi.yml:
-    method: derived
-    evidence: paths are a subset of openapi/_original/ (split from the harvested spec)
+    method: unknown
+    evidence: no authorship recorded
   openapi/amazon-kendra-query-suggestions-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
   openapi/amazon-kendra-query-suggestions-block-list-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  openapi/amazon-kendra-rescore-execution-plan-api-openapi.yml:
+    method: unknown
+    evidence: no authorship recorded
   openapi/amazon-kendra-thesaurus-api-openapi.yml:
     method: unknown
     evidence: no authorship recorded
+  packages/amazon-kendra-packages.yml:
+    method: searched
+    evidence: declared in the artifact
+  patterns/amazon-kendra-patterns.yml:
+    method: derived
+    evidence: declared in the artifact
   plans/amazon-kendra-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
   postman/amazon-kendra.postman_collection.json:
     method: derived
     evidence: openapi/amazon-kendra
+  privacy/amazon-kendra-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/amazon-kendra-rate-limits.yml:
-    method: generated
+    method: searched
     evidence: declared in the artifact
   rules/amazon-kendra-jsonschema-spectral-rules.yml:
+    method: generated
+    evidence: declared in the artifact
+  rules/amazon-kendra-rules.yml:
     method: generated
     evidence: declared in the artifact
   rules/amazon-kendra-spectral-rules.yml:
@@ -294,12 +470,44 @@ artifacts:
   security/amazon-kendra-vulnerability-disclosure.yml:
     method: searched
     evidence: declared in the artifact
+  skills/_index.yml:
+    method: generated
+    evidence: declared in the artifact
+  skills/amazon-kendra-ingest-documents.md:
+    method: generated
+    evidence: declared in the artifact
+  skills/amazon-kendra-search-index.md:
+    method: generated
+    evidence: declared in the artifact
   sla/amazon-kendra-sla.yml:
     method: generated
     evidence: declared in the artifact
   smithy/kendra-2019-02-03.json:
+    method: harvested
+    evidence: byte-identical to https://raw.githubusercontent.com/aws/api-models-aws/3cd98287b471c106254abd89279cc87308d38bfd/models/kendra/service/2019-02-03/kendra-2019-02-03.json
+      (sha256 7e32424970b4, fetched 2026-11-11T21:11:15+00:00)
+  smithy/kendra-ranking-2022-10-19.json:
+    method: harvested
+    evidence: byte-identical to https://raw.githubusercontent.com/aws/api-models-aws/3cd98287b471c106254abd89279cc87308d38bfd/models/kendra-ranking/service/2022-10-19/kendra-ranking-2022-10-19.json
+      (sha256 86122553038a, fetched 2026-11-11T21:11:16+00:00)
+  terms/amazon-kendra-terms-of-service.yml:
+    method: harvested
+    evidence: declared in the artifact
+  vendors/amazon-kendra-vendors.yml:
     method: unknown
     evidence: no authorship recorded
   vocabulary/amazon-kendra-vocabulary.yaml:
+    method: unknown
+    evidence: no authorship recorded
+  vocabulary/amazon-kendra-vocabulary.yml:
+    method: derived
+    evidence: declared in the artifact
+  well-known/amazon-kendra-midway-auth-openid-configuration.json:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/amazon-kendra-security.txt:
+    method: unknown
+    evidence: no authorship recorded
+  well-known/amazon-kendra-well-known.yml:
     method: unknown
     evidence: no authorship recorded
